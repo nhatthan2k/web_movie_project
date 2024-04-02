@@ -32,7 +32,7 @@ public class User extends BaseModel {
     private List<Follow> follows;
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private List<Evaluate> evaluates;
+    private List<Comment> comments;
 
 
 

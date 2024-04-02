@@ -38,7 +38,7 @@ public class Season extends BaseModel {
 
     @OneToMany(mappedBy = "season")
     @JsonIgnore
-    private List<Evaluate> evaluates;
+    private List<Comment> comments;
 
     @OneToMany(mappedBy = "season")
     @JsonIgnore

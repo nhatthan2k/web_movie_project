@@ -11,7 +11,7 @@ import ra.webmovieapp.model.base.BaseModel;
 @Setter
 @Builder
 @Entity
-public class Evaluate extends BaseModel {
+public class Comment extends BaseModel {
     private String comment;
     private Double rate;
 
