@@ -1,5 +1,5 @@
 package ra.webmovieapp.model.enums;
 
 public enum ERoleName {
-    ROLE_ADMIN, ROLE_TEACHER, ROLE_STUDENT
+    ROLE_ADMIN, ROLE_USER
 }
