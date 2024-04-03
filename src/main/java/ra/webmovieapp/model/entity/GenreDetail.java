@@ -14,7 +14,7 @@ public class GenreDetail {
     @Id
     @ManyToOne
     @JoinColumn(name = "genre_id", referencedColumnName = "id")
-    private Genre genre ;
+    private Genre genre;
 
     @Id
     @ManyToOne
