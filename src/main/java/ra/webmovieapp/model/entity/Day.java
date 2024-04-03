@@ -14,5 +14,5 @@ import ra.webmovieapp.model.enums.EDayName;
 @Entity
 public class Day extends BaseModel {
     @Enumerated(EnumType.STRING)
-    private EDayName day_name;
+    private EDayName dayName;
 }

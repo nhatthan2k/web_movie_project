@@ -1,16 +1,87 @@
 package ra.webmovieapp.service.ServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ra.webmovieapp.exception.CustomException;
+import ra.webmovieapp.model.dto.auth.JwtResponse;
+import ra.webmovieapp.model.dto.auth.LoginRequest;
+import ra.webmovieapp.model.dto.auth.RegisterRequest;
+import ra.webmovieapp.model.entity.Role;
 import ra.webmovieapp.model.entity.User;
+import ra.webmovieapp.model.enums.ERoleName;
 import ra.webmovieapp.repository.UserRepository;
+import ra.webmovieapp.security.Jwt.JwtProvider;
+import ra.webmovieapp.security.UserDetail.UserPrincipal;
+import ra.webmovieapp.service.RoleService;
 import ra.webmovieapp.service.UserService;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtProvider jwtProvider;
+    @Autowired
+    private AuthenticationProvider authenticationProvider;
     @Override
     public User getUserById(Long userId) {
         return userRepository.findById(userId).orElse(null);
+    }
+
+    @Override
+    public JwtResponse handleLogin(LoginRequest loginRequest) throws CustomException {
+        Authentication authentication;
+        try {
+            authentication = authenticationProvider.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+            );
+        } catch (AuthenticationException e) {
+            throw new CustomException("Username or password is wrong.");
+        }
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        if (!userPrincipal.getUser().getStatus())
+            throw new CustomException("This account is inactive.");
+        return JwtResponse.builder()
+                .accessToken(jwtProvider.generateToken(userPrincipal))
+                .fullName(userPrincipal.getUser().getFullName())
+                .username(userPrincipal.getUsername())
+                .status(userPrincipal.getUser().getStatus())
+                .roles(userPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet()))
+                .build();
+    }
+
+    @Override
+    public User handleRegister(RegisterRequest registerRequest) throws CustomException {
+        if (userRepository.existsByUsername(registerRequest.getUsername()))
+            throw new CustomException("Username is exists");
+        Set<Role> userRoles = new HashSet<>();
+        userRoles.add(roleService.findByRoleName(ERoleName.ROLE_USER));
+        User users = User.builder()
+                .fullName(registerRequest.getFullName())
+                .username(registerRequest.getUsername())
+                .password(passwordEncoder.encode(registerRequest.getPassword()))
+                .email(registerRequest.getEmail())
+                .avatar(registerRequest.getAvatar())
+                .phone(registerRequest.getPhone())
+                .status(true)
+                .roles(userRoles)
+                .build();
+        return userRepository.save(users);
     }
 }
