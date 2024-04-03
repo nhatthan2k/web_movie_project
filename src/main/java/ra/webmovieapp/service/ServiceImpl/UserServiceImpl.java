@@ -1,6 +1,11 @@
 package ra.webmovieapp.service.ServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import ra.webmovieapp.model.entity.User;
+import ra.webmovieapp.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -8,15 +13,12 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 import ra.webmovieapp.exception.CustomException;
 import ra.webmovieapp.model.dto.auth.JwtResponse;
 import ra.webmovieapp.model.dto.auth.LoginRequest;
 import ra.webmovieapp.model.dto.auth.RegisterRequest;
 import ra.webmovieapp.model.entity.Role;
-import ra.webmovieapp.model.entity.User;
 import ra.webmovieapp.model.enums.ERoleName;
-import ra.webmovieapp.repository.UserRepository;
 import ra.webmovieapp.security.Jwt.JwtProvider;
 import ra.webmovieapp.security.UserDetail.UserPrincipal;
 import ra.webmovieapp.service.RoleService;
@@ -38,6 +40,12 @@ public class UserServiceImpl implements UserService {
     private JwtProvider jwtProvider;
     @Autowired
     private AuthenticationProvider authenticationProvider;
+
+    @Override
+    public Page<User> getAllUsers(Pageable pageable) {
+        return userRepository.findAllUser(pageable);
+    }
+
     @Override
     public User getUserById(Long userId) {
         return userRepository.findById(userId).orElse(null);

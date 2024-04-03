@@ -15,9 +15,9 @@ import java.util.Set;
 @Entity
 public class User extends BaseModel {
     private String username;
+    private String password;
     private String email;
     private String fullName;
-    private String password;
     private String avatar;
     private Boolean status;
     private String phone;
