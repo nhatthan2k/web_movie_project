@@ -17,8 +17,7 @@ import java.util.List;
 public class Genre extends BaseModel {
     private String genreName;
     private String description;
-
-    private Boolean status; //?? Thể loại đi chia trạng thái làm gì ba
+    private Boolean status;
 
     @OneToMany(mappedBy = "genre")
     @JsonIgnore

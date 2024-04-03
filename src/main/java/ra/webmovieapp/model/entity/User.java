@@ -17,6 +17,7 @@ public class User extends BaseModel {
     private String username;
     private String email;
     private String fullName;
+    private String password;
     private Boolean status;
     private String phone;
     private String address;
@@ -33,10 +34,4 @@ public class User extends BaseModel {
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Comment> comments;
-
-
-
-
-
-
 }

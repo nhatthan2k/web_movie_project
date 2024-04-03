@@ -20,6 +20,4 @@ public class GenreDetail {
     @ManyToOne
     @JoinColumn(name = "movie_id", referencedColumnName = "id")
     private Movie movie;
-
-
 }
