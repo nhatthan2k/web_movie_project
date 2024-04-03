@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ra.webmovieapp.model.entity.Episode;
-import ra.webmovieapp.model.entity.Genre;
 
 @Repository
 public interface EpisodeRepository extends JpaRepository<Episode, Long> {

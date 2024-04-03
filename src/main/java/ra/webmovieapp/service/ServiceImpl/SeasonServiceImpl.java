@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ra.webmovieapp.exception.CustomException;
-import ra.webmovieapp.model.entity.Movie;
 import ra.webmovieapp.model.entity.Season;
 import ra.webmovieapp.repository.SeasonRepository;
 import ra.webmovieapp.service.SeasonService;
@@ -16,6 +15,7 @@ import java.util.Optional;
 public class SeasonServiceImpl implements SeasonService {
     @Autowired
     private SeasonRepository seasonRepository;
+
     @Override
     public Page<Season> getAllSeason(Pageable pageable) {
         return seasonRepository.findAll(pageable);
@@ -36,13 +36,13 @@ public class SeasonServiceImpl implements SeasonService {
                 .movieType(seasonRep.getMovieType())
                 .release_date(seasonRep.getRelease_date())
                 .build();
-        return seasonRepository.save(season) ;
+        return seasonRepository.save(season);
     }
 
     @Override
     public Season updateSeason(Long seasonId, Season seasonReq) throws CustomException {
         Optional<Season> updateSeason = getSeasonById(seasonId);
-        if(updateSeason.isEmpty()) throw new CustomException("Phần phim không tồn tại nhaaa!!");
+        if (updateSeason.isEmpty()) throw new CustomException("Phần phim không tồn tại nhaaa!!");
         Season season = updateSeason.get();
         season.setNickName(seasonReq.getNickName());
         season.setName(seasonReq.getName());

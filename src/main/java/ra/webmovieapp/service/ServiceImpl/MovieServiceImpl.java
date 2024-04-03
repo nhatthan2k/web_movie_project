@@ -10,7 +10,6 @@ import ra.webmovieapp.repository.MovieRepository;
 import ra.webmovieapp.service.MovieService;
 
 import java.util.Optional;
-
 @Service
 public class MovieServiceImpl implements MovieService {
     @Autowired

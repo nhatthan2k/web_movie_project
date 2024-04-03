@@ -7,12 +7,10 @@ import ra.webmovieapp.model.entity.Movie;
 
 import java.util.Optional;
 
-
 public interface MovieService {
     Page<Movie> getAllMovie(Pageable pageable);
     Optional<Movie> getMovieById(Long movieId);
     Movie save(Movie movieRep);
-
     Movie updateMovie(Long movieId, Movie movieReq) throws CustomException;
     void softDeteleByMovieId(Long movieId) throws CustomException;
 

@@ -3,11 +3,9 @@ package ra.webmovieapp.service.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import ra.webmovieapp.exception.CustomException;
 import ra.webmovieapp.model.entity.Episode;
-import ra.webmovieapp.model.entity.Genre;
 import ra.webmovieapp.repository.EpisodeRepository;
 import ra.webmovieapp.service.EpisodeService;
 
@@ -31,7 +29,7 @@ public class EpisodeServiceImpl implements EpisodeService {
     @Override
     public Episode save(Episode episodeReq) {
         Episode episode = Episode.builder()
-                .number(episodeReq.getNumber())
+                .numberEpisode(episodeReq.getNumberEpisode())
                 .source(episodeReq.getSource())
                 .build();
         return episodeRepository.save(episode);
@@ -42,7 +40,7 @@ public class EpisodeServiceImpl implements EpisodeService {
         Optional<Episode> updateEpisode = getEpisodeById(episodeId);
         if (updateEpisode.isEmpty()) throw new CustomException("Tập phim không tồn tại nha!!");
         Episode episode = updateEpisode.get();
-        episode.setNumber(episodeReq.getNumber());
+        episode.setNumberEpisode(episodeReq.getNumberEpisode());
         episode.setSource(episodeReq.getSource());
         return episodeRepository.save(episode);
     }

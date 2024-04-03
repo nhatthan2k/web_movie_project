@@ -14,12 +14,10 @@ public class GenreDetail {
     @Id
     @ManyToOne
     @JoinColumn(name = "genre_id", referencedColumnName = "id")
-    private Genre genre ;
+    private Genre genre;
 
     @Id
     @ManyToOne
     @JoinColumn(name = "movie_id", referencedColumnName = "id")
     private Movie movie;
-
-
 }

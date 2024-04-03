@@ -1,7 +1,8 @@
 package ra.webmovieapp.service;
 
-import org.springframework.stereotype.Service;
-
+import ra.webmovieapp.model.entity.Role;
+import ra.webmovieapp.model.enums.ERoleName;
 
 public interface RoleService {
+    Role findByRoleName(ERoleName roleName);
 }

@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ra.webmovieapp.exception.CustomException;
 import ra.webmovieapp.model.entity.Genre;
-import ra.webmovieapp.model.entity.Movie;
 import ra.webmovieapp.repository.GenreRepository;
 import ra.webmovieapp.service.GenreService;
 
