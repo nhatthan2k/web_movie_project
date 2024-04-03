@@ -1,7 +1,5 @@
 package ra.webmovieapp.model.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -25,7 +23,7 @@ public class SeasonRequest {
     private String name;
     private String description;
     private String avatar;
-    @Pattern ( regexp = "^(?i)(MULTIPLE|SINGLE)$",message = "String value must be 'MULTIPLE | SINGLE'")
+    @Pattern(regexp = "^(?i)(MULTIPLE|SINGLE)$", message = "String value must be 'MULTIPLE | SINGLE'")
     private EMovieType movieType;
     @Pattern(regexp = "^(?i)(ACTIVE|INACTIVE)$", message = "String value must be 'ACTIVE | INACTIVE'")
     private EMovieStatus movieStatus;

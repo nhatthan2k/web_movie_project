@@ -3,8 +3,7 @@ package ra.webmovieapp.model.dto.request;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import ra.webmovieapp.model.entity.Season;
-import ra.webmovieapp.model.entity.User;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

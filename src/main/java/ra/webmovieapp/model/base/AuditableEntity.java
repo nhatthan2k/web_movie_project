@@ -12,8 +12,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class AuditableEntity {
-	private LocalDate createdDate;
-	private LocalDate modifyDate;
-	private String createBy;
-	private String modifyBy;
+    private LocalDate createdDate;
+    private LocalDate modifyDate;
+    private String createBy;
+    private String modifyBy;
 }

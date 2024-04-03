@@ -9,9 +9,12 @@ import java.util.Optional;
 
 public interface SeasonService {
     Page<Season> getAllSeason(Pageable pageable);
+
     Optional<Season> getSeasonById(Long seasonId);
+
     Season save(Season seasonRep);
 
     Season updateSeason(Long seasonId, Season seasonReq) throws CustomException;
-    void hardDeleteBySeasonId(Long seasonId) throws CustomException ;
+
+    void hardDeleteBySeasonId(Long seasonId) throws CustomException;
 }

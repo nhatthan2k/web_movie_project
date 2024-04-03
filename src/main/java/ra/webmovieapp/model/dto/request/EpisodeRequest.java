@@ -2,6 +2,7 @@ package ra.webmovieapp.model.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import ra.webmovieapp.exception.CustomException;
 import ra.webmovieapp.model.dto.wrapper.ResponseWrapper;
 import ra.webmovieapp.model.entity.Episode;
-import ra.webmovieapp.model.entity.Genre;
-import ra.webmovieapp.model.entity.Season;
 import ra.webmovieapp.model.enums.EHttpStatus;
 import ra.webmovieapp.service.EpisodeService;
 
@@ -30,7 +28,8 @@ public class AEpisodesController {
             @RequestParam(defaultValue = "0", name = "page") int page,
             @RequestParam(defaultValue = "number", name = "sort") String sort,
             @RequestParam(defaultValue = "asc", name = "order") String order,
-            @PathVariable("seasonId") String seasonId) throws CustomException {
+            @PathVariable("seasonId") String seasonId
+    ) throws CustomException {
         Pageable pageable;
         if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
         else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
@@ -46,13 +45,13 @@ public class AEpisodesController {
                             episodes.getContent()
                     ), HttpStatus.OK
             );
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new CustomException("Sai định dạng ID rồi nhaa!!");
         }
     }
 
     @GetMapping("/{episodeId}")
-    public ResponseEntity<?> getEpisodeById(@PathVariable("episodeId") String episodeId) throws CustomException{
+    public ResponseEntity<?> getEpisodeById(@PathVariable("episodeId") String episodeId) throws CustomException {
         try {
             Long id = Long.parseLong(episodeId);
             Optional<Episode> episode = episodeService.getEpisodeById(id);
@@ -64,13 +63,13 @@ public class AEpisodesController {
                             HttpStatus.OK.name(),
                             episode.get()
                     ), HttpStatus.OK);
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new CustomException("Sai định dạng ID rồi nhaa!!");
         }
     }
 
     @PostMapping
-    public ResponseEntity<?> createEpisode(@RequestBody Episode episodeReq) throws CustomException{
+    public ResponseEntity<?> createEpisode(@RequestBody Episode episodeReq) throws CustomException {
         return new ResponseEntity<>(
                 new ResponseWrapper<>(
                         EHttpStatus.SUCCESS,
@@ -85,7 +84,7 @@ public class AEpisodesController {
     public ResponseEntity<?> updateEpisode(
             @PathVariable("episodeId") String updateEpisodeId,
             @RequestBody Episode episodeReq
-    ) throws CustomException{
+    ) throws CustomException {
         try {
             Long id = Long.parseLong(updateEpisodeId);
             return new ResponseEntity<>(
@@ -101,7 +100,7 @@ public class AEpisodesController {
     }
 
     @DeleteMapping("/delete/{episodeId}")
-    public ResponseEntity<?> hardDeleteEpisodeById(@PathVariable("episodeId") String deleteEpisodeId) throws CustomException{
+    public ResponseEntity<?> hardDeleteEpisodeById(@PathVariable("episodeId") String deleteEpisodeId) throws CustomException {
         try {
             Long id = Long.parseLong(deleteEpisodeId);
             episodeService.hardDeleteByEpisodeId(id);

@@ -3,6 +3,7 @@ package ra.webmovieapp.model.dto.auth;
 import lombok.*;
 
 import java.util.Set;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

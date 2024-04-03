@@ -22,6 +22,7 @@ import ra.webmovieapp.service.UserService;
 public class AuthController {
     @Autowired
     private UserService userService;
+
     @PostMapping("/sign-in")
     public ResponseEntity<?> handleLogin(@RequestBody @Valid LoginRequest loginRequest) throws CustomException {
         return new ResponseEntity<>(

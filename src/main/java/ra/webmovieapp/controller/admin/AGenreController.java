@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import ra.webmovieapp.exception.CustomException;
 import ra.webmovieapp.model.dto.wrapper.ResponseWrapper;
 import ra.webmovieapp.model.entity.Genre;
-import ra.webmovieapp.model.entity.Movie;
-import ra.webmovieapp.model.entity.User;
 import ra.webmovieapp.model.enums.EHttpStatus;
 import ra.webmovieapp.service.GenreService;
 
@@ -31,23 +29,23 @@ public class AGenreController {
             @RequestParam(defaultValue = "genreName", name = "sort") String sort,
             @RequestParam(defaultValue = "asc", name = "order") String order
     ) throws CustomException {
-            Pageable pageable;
-            if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
-            else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
-            Page<Genre> genres = genreService.getAllGenres(pageable);
-            if (genres.getContent().isEmpty()) throw new CustomException("Genre rỗng nhaaa");
-            return new ResponseEntity<>(
-                    new ResponseWrapper<>(
-                            EHttpStatus.SUCCESS,
-                            HttpStatus.OK.value(),
-                            HttpStatus.OK.name(),
-                            genres.getContent()
-                    ), HttpStatus.OK
-            );
+        Pageable pageable;
+        if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
+        else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
+        Page<Genre> genres = genreService.getAllGenres(pageable);
+        if (genres.getContent().isEmpty()) throw new CustomException("Genre rỗng nhaaa");
+        return new ResponseEntity<>(
+                new ResponseWrapper<>(
+                        EHttpStatus.SUCCESS,
+                        HttpStatus.OK.value(),
+                        HttpStatus.OK.name(),
+                        genres.getContent()
+                ), HttpStatus.OK
+        );
     }
 
     @GetMapping("/{genreId}")
-    public ResponseEntity<?> getGenreById(@PathVariable("genreId") String genreId) throws CustomException{
+    public ResponseEntity<?> getGenreById(@PathVariable("genreId") String genreId) throws CustomException {
         try {
             Long id = Long.parseLong(genreId);
             Optional<Genre> genre = genreService.getGenreById(id);
@@ -59,13 +57,13 @@ public class AGenreController {
                             HttpStatus.OK.name(),
                             genre.get()
                     ), HttpStatus.OK);
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new CustomException("Sai định dạng ID rồi nhaa!!");
         }
     }
 
     @PostMapping
-    public ResponseEntity<?> createGenre(@RequestBody Genre genreReq) throws CustomException{
+    public ResponseEntity<?> createGenre(@RequestBody Genre genreReq) throws CustomException {
         return new ResponseEntity<>(
                 new ResponseWrapper<>(
                         EHttpStatus.SUCCESS,
@@ -80,7 +78,7 @@ public class AGenreController {
     public ResponseEntity<?> updateGenre(
             @PathVariable("genreId") String updateGenreId,
             @RequestBody Genre genreReq
-    ) throws CustomException{
+    ) throws CustomException {
         try {
             Long id = Long.parseLong(updateGenreId);
             return new ResponseEntity<>(
@@ -96,7 +94,7 @@ public class AGenreController {
     }
 
     @DeleteMapping("/{movieId}")
-    public ResponseEntity<?> softDeleteGenreById(@PathVariable("genreId") String deleteGenreId) throws CustomException{
+    public ResponseEntity<?> softDeleteGenreById(@PathVariable("genreId") String deleteGenreId) throws CustomException {
         try {
             Long id = Long.parseLong(deleteGenreId);
             genreService.softDeteleByGenreId(id);
@@ -113,7 +111,7 @@ public class AGenreController {
     }
 
     @DeleteMapping("/delete/{genreId}")
-    public ResponseEntity<?> hardDeleteMovieById(@PathVariable("genreId") String deleteGenreId) throws CustomException{
+    public ResponseEntity<?> hardDeleteMovieById(@PathVariable("genreId") String deleteGenreId) throws CustomException {
         try {
             Long id = Long.parseLong(deleteGenreId);
             genreService.hardDeleteByGenreId(id);

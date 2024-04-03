@@ -16,12 +16,14 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import ra.webmovieapp.security.UserDetail.UserDetailService;
 
 import java.io.IOException;
+
 @Component
 @RequiredArgsConstructor
 public class JwtTokenFilter extends OncePerRequestFilter {
     private final JwtProvider jwtProvider;
     private final UserDetailService userDetailService;
     private final Logger logger = LoggerFactory.getLogger(JwtEntryPoint.class);
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {

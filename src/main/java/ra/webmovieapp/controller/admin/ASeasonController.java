@@ -17,18 +17,20 @@ import ra.webmovieapp.service.MovieService;
 import ra.webmovieapp.service.SeasonService;
 
 import java.util.Optional;
+
 @RestController
 @RequestMapping("/v1/admin/season")
 public class ASeasonController {
     @Autowired
     private SeasonService seasonService;
+
     @GetMapping
     public ResponseEntity<?> getAllMoviesToPage(
             @RequestParam(defaultValue = "5", name = "limit") int limit,
             @RequestParam(defaultValue = "0", name = "page") int page,
             @RequestParam(defaultValue = "nickName", name = "sort") String sort,
             @RequestParam(defaultValue = "asc", name = "order") String order
-    )throws CustomException {
+    ) throws CustomException {
         Pageable pageable;
         if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
         else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
@@ -45,7 +47,7 @@ public class ASeasonController {
     }
 
     @GetMapping("/{seasonId}")
-    public ResponseEntity<?> getMovieById(@PathVariable("seasonId") String seasonId) throws CustomException{
+    public ResponseEntity<?> getMovieById(@PathVariable("seasonId") String seasonId) throws CustomException {
         try {
             Long id = Long.parseLong(seasonId);
             Optional<Season> season = seasonService.getSeasonById(id);
@@ -57,13 +59,13 @@ public class ASeasonController {
                             HttpStatus.OK.name(),
                             season.get()
                     ), HttpStatus.OK);
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new CustomException("Sai định dạng ID rồi nhaa!!");
         }
     }
 
     @PostMapping
-    public ResponseEntity<?> createMovie(@RequestBody Season seasonReq) throws CustomException{
+    public ResponseEntity<?> createMovie(@RequestBody Season seasonReq) throws CustomException {
         return new ResponseEntity<>(
                 new ResponseWrapper<>(
                         EHttpStatus.SUCCESS,
@@ -78,7 +80,7 @@ public class ASeasonController {
     public ResponseEntity<?> updateSeason(
             @PathVariable("seasonId") String updateSeasonId,
             @RequestBody Season season
-    ) throws CustomException{
+    ) throws CustomException {
         try {
             Long id = Long.parseLong(updateSeasonId);
             return new ResponseEntity<>(
@@ -94,7 +96,7 @@ public class ASeasonController {
     }
 
     @DeleteMapping("/delete/{seasonId}")
-    public ResponseEntity<?> hardDeleteMovieById(@PathVariable("seasonId") String deleteSeasonId) throws CustomException{
+    public ResponseEntity<?> hardDeleteMovieById(@PathVariable("seasonId") String deleteSeasonId) throws CustomException {
         try {
             Long id = Long.parseLong(deleteSeasonId);
             seasonService.hardDeleteBySeasonId(id);

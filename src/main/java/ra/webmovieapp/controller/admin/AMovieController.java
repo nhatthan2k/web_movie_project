@@ -22,13 +22,14 @@ import java.util.Optional;
 public class AMovieController {
     @Autowired
     private MovieService movieService;
+
     @GetMapping
     public ResponseEntity<?> getAllMoviesToPage(
             @RequestParam(defaultValue = "5", name = "limit") int limit,
             @RequestParam(defaultValue = "0", name = "page") int page,
             @RequestParam(defaultValue = "movieName", name = "sort") String sort,
             @RequestParam(defaultValue = "asc", name = "order") String order
-    )throws CustomException {
+    ) throws CustomException {
         Pageable pageable;
         if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
         else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
@@ -45,7 +46,7 @@ public class AMovieController {
     }
 
     @GetMapping("/{movieId}")
-    public ResponseEntity<?> getMovieById(@PathVariable("movieId") String movieId) throws CustomException{
+    public ResponseEntity<?> getMovieById(@PathVariable("movieId") String movieId) throws CustomException {
         try {
             Long id = Long.parseLong(movieId);
             Optional<Movie> movie = movieService.getMovieById(id);
@@ -57,13 +58,13 @@ public class AMovieController {
                             HttpStatus.OK.name(),
                             movie.get()
                     ), HttpStatus.OK);
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new CustomException("Sai định dạng ID rồi nhaa!!");
         }
     }
 
     @PostMapping
-    public ResponseEntity<?> createMovie(@RequestBody Movie movieReq) throws CustomException{
+    public ResponseEntity<?> createMovie(@RequestBody Movie movieReq) throws CustomException {
         return new ResponseEntity<>(
                 new ResponseWrapper<>(
                         EHttpStatus.SUCCESS,
@@ -78,7 +79,7 @@ public class AMovieController {
     public ResponseEntity<?> updateMovie(
             @PathVariable("movieId") String updateMovieId,
             @RequestBody Movie movie
-    ) throws CustomException{
+    ) throws CustomException {
         try {
             Long id = Long.parseLong(updateMovieId);
             return new ResponseEntity<>(
@@ -94,7 +95,7 @@ public class AMovieController {
     }
 
     @DeleteMapping("/{movieId}")
-    public ResponseEntity<?> softDeleteMovieById(@PathVariable("movieId") String deleteMovieId) throws CustomException{
+    public ResponseEntity<?> softDeleteMovieById(@PathVariable("movieId") String deleteMovieId) throws CustomException {
         try {
             Long id = Long.parseLong(deleteMovieId);
             movieService.softDeteleByMovieId(id);
@@ -111,7 +112,7 @@ public class AMovieController {
     }
 
     @DeleteMapping("/delete/{movieId}")
-    public ResponseEntity<?> hardDeleteMovieById(@PathVariable("movieId") String deleteMovieId) throws CustomException{
+    public ResponseEntity<?> hardDeleteMovieById(@PathVariable("movieId") String deleteMovieId) throws CustomException {
         try {
             Long id = Long.parseLong(deleteMovieId);
             movieService.hardDeleteByMovieId(id);

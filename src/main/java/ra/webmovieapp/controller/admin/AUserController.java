@@ -22,6 +22,7 @@ import ra.webmovieapp.service.UserService;
 public class AUserController {
     @Autowired
     private UserService userService;
+
     @GetMapping
     public ResponseEntity<?> getAllUsersToPage(
             @RequestParam(defaultValue = "5", name = "limit") int limit,

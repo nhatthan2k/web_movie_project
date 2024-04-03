@@ -10,8 +10,11 @@ import ra.webmovieapp.model.dto.auth.RegisterRequest;
 
 public interface UserService {
     Page<User> getAllUsers(Pageable pageable);
+
     User getUserById(Long userId);
+
     JwtResponse handleLogin(LoginRequest loginRequest) throws CustomException;
+
     User handleRegister(RegisterRequest registerRequest) throws CustomException;
 
 }

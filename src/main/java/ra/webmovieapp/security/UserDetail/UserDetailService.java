@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserDetailService implements UserDetailsService {
     private final UserRepository userRepository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> userOptional = userRepository.getUserByUsername(username);
@@ -30,6 +31,6 @@ public class UserDetailService implements UserDetailsService {
                     .build();
             return userPrincipal;
         }
-        throw new  RuntimeException("role not found");
+        throw new RuntimeException("role not found");
     }
 }
