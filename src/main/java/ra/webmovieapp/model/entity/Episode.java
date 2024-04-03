@@ -12,7 +12,7 @@ import ra.webmovieapp.model.base.BaseModel;
 @Builder
 @Entity
 public class Episode extends BaseModel {
-    private Long number;
+    private Long numberEpisode;
     private String source;
 
     @ManyToOne

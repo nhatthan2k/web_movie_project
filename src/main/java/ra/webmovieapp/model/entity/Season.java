@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import ra.webmovieapp.model.base.BaseModel;
+import ra.webmovieapp.model.enums.EMovieStatus;
 import ra.webmovieapp.model.enums.EMovieType;
 
 import java.time.LocalDate;
@@ -21,7 +22,10 @@ public class Season extends BaseModel {
     private String name;
     private String description;
     private String avatar;
+    @Enumerated(EnumType.STRING)
     private EMovieType movieType;
+    @Enumerated(EnumType.STRING)
+    private EMovieStatus movieStatus;
     private LocalDate release_date;
 
     @ManyToMany(fetch = FetchType.EAGER)
