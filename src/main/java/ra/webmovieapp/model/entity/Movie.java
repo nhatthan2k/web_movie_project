@@ -18,6 +18,7 @@ public class Movie extends BaseModel {
     private String name;
     private String poster;
     private String description;
+    private Boolean status;
 
     @OneToMany(mappedBy = "movie")
     @JsonIgnore

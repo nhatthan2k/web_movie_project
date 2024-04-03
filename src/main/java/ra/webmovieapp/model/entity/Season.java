@@ -21,6 +21,7 @@ public class Season extends BaseModel {
     private String name;
     private String description;
     private String avatar;
+    @Enumerated(EnumType.STRING)
     private EMovieType movieType;
     private LocalDate release_date;
 
