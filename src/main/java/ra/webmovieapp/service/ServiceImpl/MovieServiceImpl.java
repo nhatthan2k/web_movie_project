@@ -41,7 +41,7 @@ public class MovieServiceImpl implements MovieService {
         if(updateMovie.isEmpty()) throw new CustomException("Phim không tồn tại nhaaa!!");
         Movie movie = updateMovie.get();
         movie.setName(movieReq.getName());
-        movie.setName(movieReq.getPoster());
+        movie.setPoster(movieReq.getPoster());
         movie.setDescription(movieReq.getDescription());
         return movieRepository.save(movie);
     }
