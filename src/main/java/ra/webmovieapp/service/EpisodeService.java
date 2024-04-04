@@ -12,7 +12,7 @@ public interface EpisodeService {
 
     Optional<Episode> getEpisodeById(Long episodeId);
 
-    Episode save(Episode episodeReq);
+    Episode save(Episode episodeReq) throws CustomException;
 
     Episode updateEpisode(Long episodeId, Episode episodeReq) throws CustomException;
 

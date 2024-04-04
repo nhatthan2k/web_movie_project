@@ -6,8 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ra.webmovieapp.exception.CustomException;
 import ra.webmovieapp.model.entity.Episode;
+import ra.webmovieapp.model.entity.Season;
 import ra.webmovieapp.repository.EpisodeRepository;
 import ra.webmovieapp.service.EpisodeService;
+import ra.webmovieapp.service.SeasonService;
 
 import java.util.Optional;
 
@@ -15,6 +17,8 @@ import java.util.Optional;
 public class EpisodeServiceImpl implements EpisodeService {
     @Autowired
     private EpisodeRepository episodeRepository;
+    @Autowired
+    private SeasonService seasonService;
 
     @Override
     public Page<Episode> getAllEpisodeBySeasonId(Pageable pageable, Long seasonId) {
@@ -27,12 +31,16 @@ public class EpisodeServiceImpl implements EpisodeService {
     }
 
     @Override
-    public Episode save(Episode episodeReq) {
-        Episode episode = Episode.builder()
-                .numberEpisode(episodeReq.getNumberEpisode())
-                .source(episodeReq.getSource())
-                .build();
-        return episodeRepository.save(episode);
+    public Episode save(Episode episodeReq) throws CustomException{
+        Optional<Season> season = seasonService.getSeasonById(episodeReq.getSeason().getId());
+        if (season.isEmpty()) {
+            Episode episode = Episode.builder()
+                    .numberEpisode(episodeReq.getNumberEpisode())
+
+                    .source(episodeReq.getSource())
+                    .build();
+            return episodeRepository.save(episode);
+        } throw new CustomException("Không có phần phim!!");
     }
 
     @Override
