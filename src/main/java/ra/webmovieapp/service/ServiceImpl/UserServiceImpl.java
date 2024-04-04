@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import ra.webmovieapp.model.dto.request.InfomationRequest;
 import ra.webmovieapp.model.entity.User;
 import ra.webmovieapp.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -92,4 +93,29 @@ public class UserServiceImpl implements UserService {
                 .build();
         return userRepository.save(users);
     }
+
+    @Override
+    public User updateAcc(InfomationRequest infomationRequest, Long id) {
+        User userOld = getUserById(id);
+        Set<Role> roles = userOld.getRoles();
+        User user = User.builder()
+                .fullName(infomationRequest.getFullName())
+                .username(userOld.getUsername())
+                .password(userOld.getPassword())
+                .email(infomationRequest.getEmail())
+                .avatar(infomationRequest.getAvatar())
+                .phone(infomationRequest.getPhone())
+                .status(userOld.getStatus())
+                .address(infomationRequest.getAddress())
+                .build();
+                user.setId(id);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+
 }

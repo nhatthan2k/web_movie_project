@@ -25,6 +25,7 @@ public class FollowServiceImpl implements FollowService {
 
     @Autowired
     private FollowRepository followRepository;
+
     @Override
     public List<Season> getAllSeasonByUserId(Long userId) {
         return followRepository.findSeasonByUserId(userId);
@@ -34,13 +35,13 @@ public class FollowServiceImpl implements FollowService {
     public Follow addSeasonToFollow(FollowRequest followRequest, Long userId) throws CustomException {
         User user = userService.getUserById(userId);
         Optional<Season> season = seasonService.getSeasonById(followRequest.getSeasonId());
-        if (season.isEmpty()){
-            Follow follow = Follow.builder()
-                    .season(season.get())
-                    .user(user)
-                    .build();
-            return followRepository.save(follow);
-        } throw new CustomException("Phần phim này không tồn tại!!!");
+        if (season.isEmpty()) throw new CustomException("Phần phim này không tồn tại!!!");
+        if (followRepository.existsBySeason(season.get())) throw new CustomException("Đã follow");
+        Follow follow = Follow.builder()
+                .season(season.get())
+                .user(user)
+                .build();
+        return followRepository.save(follow);
     }
 
     @Override
