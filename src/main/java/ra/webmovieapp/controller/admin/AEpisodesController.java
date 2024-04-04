@@ -22,7 +22,7 @@ public class AEpisodesController {
     @Autowired
     private EpisodeService episodeService;
 
-    @GetMapping("/{seasonId}")
+    @GetMapping("/season/{seasonId}")
     public ResponseEntity<?> getAllEpisodesToPage(
             @RequestParam(defaultValue = "5", name = "limit") int limit,
             @RequestParam(defaultValue = "0", name = "page") int page,

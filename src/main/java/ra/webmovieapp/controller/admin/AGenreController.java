@@ -93,7 +93,7 @@ public class AGenreController {
         }
     }
 
-    @DeleteMapping("/{movieId}")
+    @DeleteMapping("/{genreId}")
     public ResponseEntity<?> softDeleteGenreById(@PathVariable("genreId") String deleteGenreId) throws CustomException {
         try {
             Long id = Long.parseLong(deleteGenreId);

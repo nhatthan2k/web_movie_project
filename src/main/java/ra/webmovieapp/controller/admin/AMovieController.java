@@ -27,7 +27,7 @@ public class AMovieController {
     public ResponseEntity<?> getAllMoviesToPage(
             @RequestParam(defaultValue = "5", name = "limit") int limit,
             @RequestParam(defaultValue = "0", name = "page") int page,
-            @RequestParam(defaultValue = "movieName", name = "sort") String sort,
+            @RequestParam(defaultValue = "name", name = "sort") String sort,
             @RequestParam(defaultValue = "asc", name = "order") String order
     ) throws CustomException {
         Pageable pageable;
