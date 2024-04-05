@@ -38,6 +38,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(
                         (auth) -> auth
                                 .requestMatchers("/v1/auth/**").permitAll()
+                                .requestMatchers("/v1/permit/**").permitAll()
                                 .requestMatchers("/v1/account/**").hasAnyAuthority(
                                         String.valueOf(ERoleName.ROLE_ADMIN),
                                         String.valueOf(ERoleName.ROLE_USER))
