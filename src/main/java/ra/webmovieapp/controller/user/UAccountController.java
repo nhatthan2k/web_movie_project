@@ -56,8 +56,8 @@ public class UAccountController {
         User user = userService.getUserById(id);
         String oldPassword = user.getPassword();
 
-        boolean isPaswordMatch = passwordEncoder.matches(passwordRequest.getOldPass(), oldPassword);
-        if (isPaswordMatch) {
+        boolean isPasswordMatch = passwordEncoder.matches(passwordRequest.getOldPass(), oldPassword);
+        if (isPasswordMatch) {
             if (!passwordRequest.getNewPass().equals(passwordRequest.getConfirmNewPass())){
                 return new ResponseEntity<>(
                         new ResponseWrapper<>(

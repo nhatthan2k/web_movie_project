@@ -41,7 +41,7 @@ public class UFollowController {
                         HttpStatus.OK.value(),
                         HttpStatus.OK.name(),
                         followService.addSeasonToFollow(followRequest, id)
-                ), HttpStatus.OK);
+                ), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{seasonId}")

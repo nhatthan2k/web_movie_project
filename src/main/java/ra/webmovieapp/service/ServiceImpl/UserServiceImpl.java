@@ -107,6 +107,7 @@ public class UserServiceImpl implements UserService {
                 .phone(infomationRequest.getPhone())
                 .status(userOld.getStatus())
                 .address(infomationRequest.getAddress())
+                .roles(roles)
                 .build();
                 user.setId(id);
         return userRepository.save(user);

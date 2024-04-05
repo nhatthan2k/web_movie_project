@@ -1,7 +1,6 @@
 package ra.webmovieapp.model.dto.request;
 
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @AllArgsConstructor
@@ -9,9 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class CommentRequest {
+public class CommentRequestUpdate {
     @NotEmpty(message = "Không được bỏ trống chỗ này nha!!")
     private String comment;
-    @NotNull(message = "Không được bỏ trống chỗ này nha!!")
-    private Long seasonId;
 }

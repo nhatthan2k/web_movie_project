@@ -6,4 +6,5 @@ import ra.webmovieapp.model.entity.Comment;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
+
 }

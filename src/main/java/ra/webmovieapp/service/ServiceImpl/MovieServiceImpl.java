@@ -9,6 +9,8 @@ import ra.webmovieapp.model.entity.Movie;
 import ra.webmovieapp.repository.MovieRepository;
 import ra.webmovieapp.service.MovieService;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -54,10 +56,27 @@ public class MovieServiceImpl implements MovieService {
         if(movie.getStatus()){movie.setStatus(false);} throw new CustomException("Phim đã khóa");
     }
 
+//    @Override
+//    public void hardDeleteByMovieId(Long movieId) throws CustomException {
+//        if (!movieRepository.existsById(movieId)) throw new CustomException("Không thấy ID nhaaa!!");
+//        movieRepository.deleteById(movieId);
+//    }
+
+    @Override
+    public List<Movie> getMovieOnInactive() {
+        return movieRepository.findAllByStatus(false);
+    }
+
     @Override
     public void hardDeleteByMovieId(Long movieId) throws CustomException {
-        if (!movieRepository.existsById(movieId)) throw new CustomException("Không thấy ID nhaaa!!");
-        movieRepository.deleteById(movieId);
+        List<Movie> movieList = getMovieOnInactive();
+
+        for (Movie movie: movieList) {
+            if (Objects.equals(movie.getId(), movieId)) {
+                movieList.remove(movie);
+            } throw new CustomException("Id không nằm trong danh sách được xóa!!");
+        }
     }
+
 
 }
