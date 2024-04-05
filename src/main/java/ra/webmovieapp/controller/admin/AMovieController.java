@@ -110,6 +110,18 @@ public class AMovieController {
             throw new CustomException("Sai định dạng ID rồi nhaa!!");
         }
     }
+    @GetMapping("/Inactive")
+    public ResponseEntity<?> getMovieOnInactive() throws CustomException {
+        return new ResponseEntity<>(
+                new ResponseWrapper<>(
+                        EHttpStatus.SUCCESS,
+                        HttpStatus.OK.value(),
+                        HttpStatus.OK.name(),
+                        movieService.getMovieOnInactive()
+                ), HttpStatus.OK);
+    }
+
+
 
     @DeleteMapping("/delete/{movieId}")
     public ResponseEntity<?> hardDeleteMovieById(@PathVariable("movieId") String deleteMovieId) throws CustomException {
@@ -126,6 +138,6 @@ public class AMovieController {
         } catch (NumberFormatException e) {
             throw new CustomException("Sai định dạng ID rồi nhaa!!");
         }
-    }
 
+    }
 }

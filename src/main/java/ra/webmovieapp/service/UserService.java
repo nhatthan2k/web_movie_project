@@ -2,6 +2,7 @@ package ra.webmovieapp.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import ra.webmovieapp.model.dto.request.InfomationRequest;
 import ra.webmovieapp.model.entity.User;
 import ra.webmovieapp.exception.CustomException;
 import ra.webmovieapp.model.dto.auth.JwtResponse;
@@ -16,5 +17,8 @@ public interface UserService {
     JwtResponse handleLogin(LoginRequest loginRequest) throws CustomException;
 
     User handleRegister(RegisterRequest registerRequest) throws CustomException;
+
+    User updateAcc(InfomationRequest infomationRequest, Long id);
+    User save(User user);
 
 }

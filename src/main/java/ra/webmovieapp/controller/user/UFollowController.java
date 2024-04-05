@@ -20,7 +20,7 @@ public class UFollowController {
     @Autowired
     private UserLoggedIn userLoggedIn;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<?> getFollowFilmById() throws CustomException {
             Long id = userLoggedIn.getUserLoggedIn().getId();
             return new ResponseEntity<>(
@@ -41,10 +41,10 @@ public class UFollowController {
                         HttpStatus.OK.value(),
                         HttpStatus.OK.name(),
                         followService.addSeasonToFollow(followRequest, id)
-                ), HttpStatus.OK);
+                ), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/season/{seasonId}")
+    @DeleteMapping("/{seasonId}")
     public ResponseEntity<?> deleteSeasonToFollow(@PathVariable("seasonId") String seasonId) throws CustomException {
         Long idLogin = userLoggedIn.getUserLoggedIn().getId();
         try {
@@ -61,5 +61,4 @@ public class UFollowController {
             throw new CustomException("Sai định dạng ID rồi nhaa!!");
         }
     }
-
 }

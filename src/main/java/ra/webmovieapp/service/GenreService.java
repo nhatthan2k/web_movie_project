@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import ra.webmovieapp.exception.CustomException;
 import ra.webmovieapp.model.entity.Genre;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface GenreService {
@@ -20,4 +21,6 @@ public interface GenreService {
 
     void hardDeleteByGenreId(Long genreId) throws CustomException;
 
+    List<Genre> getGenresOnActive();
+    List<Genre> getByNameOrDes(String name, String description);
 }

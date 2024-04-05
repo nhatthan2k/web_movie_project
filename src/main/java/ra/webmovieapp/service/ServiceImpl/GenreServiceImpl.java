@@ -1,5 +1,6 @@
 package ra.webmovieapp.service.ServiceImpl;
 
+import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +10,8 @@ import ra.webmovieapp.model.entity.Genre;
 import ra.webmovieapp.repository.GenreRepository;
 import ra.webmovieapp.service.GenreService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -60,5 +63,13 @@ public class GenreServiceImpl implements GenreService {
         genreRepository.deleteById(genreId);
     }
 
+    @Override
+    public List<Genre> getGenresOnActive() {
+        return genreRepository.findByStatus(true);
+    }
 
+    @Override
+    public List<Genre> getByNameOrDes(String name, String description) {
+        return genreRepository.findGenreOnActivebyNameAndDes(name, description);
+    }
 }

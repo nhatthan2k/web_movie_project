@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import ra.webmovieapp.exception.CustomException;
 import ra.webmovieapp.model.entity.Movie;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MovieService {
@@ -19,4 +20,7 @@ public interface MovieService {
     void softDeteleByMovieId(Long movieId) throws CustomException;
 
     void hardDeleteByMovieId(Long movieId) throws CustomException;
+
+    List<Movie> getMovieOnInactive();
 }
+

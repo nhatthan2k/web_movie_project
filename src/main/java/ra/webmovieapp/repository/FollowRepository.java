@@ -17,4 +17,5 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
 //    void deleteBySeasonAndUser(Season season, User user);
     @Query("delete from Follow f where f.user.id = :userId and f.season.id = :seasonId")
     void  deleteBySeasonIdAndUserId(Long seasonId, Long userId);
+    boolean existsBySeason(Season season);
 }
