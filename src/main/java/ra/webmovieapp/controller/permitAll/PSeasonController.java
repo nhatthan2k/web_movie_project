@@ -21,6 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1/permit/seasons")
+@CrossOrigin("*")
 public class PSeasonController {
     @Autowired
     private SeasonService seasonService;

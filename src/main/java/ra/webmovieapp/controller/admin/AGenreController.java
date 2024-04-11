@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/admin/genre")
+@CrossOrigin("*")
 public class AGenreController {
     @Autowired
     private GenreService genreService;

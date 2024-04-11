@@ -14,6 +14,7 @@ import ra.webmovieapp.service.CommentService;
 
 @RestController
 @RequestMapping("/v1/user/comment")
+@CrossOrigin("*")
 public class UCommentController {
     @Autowired
     private UserLoggedIn userLoggedIn;

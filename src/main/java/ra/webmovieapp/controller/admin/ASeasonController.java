@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/admin/season")
+@CrossOrigin("*")
 public class ASeasonController {
     @Autowired
     private SeasonService seasonService;

@@ -3,10 +3,7 @@ package ra.webmovieapp.controller.permitAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ra.webmovieapp.exception.CustomException;
 import ra.webmovieapp.model.dto.wrapper.ResponseWrapper;
 import ra.webmovieapp.model.entity.Genre;
@@ -17,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1/permit/genre")
+@CrossOrigin("*")
 public class PGenreController {
     @Autowired
     private GenreService genreService;

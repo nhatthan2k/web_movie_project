@@ -19,6 +19,7 @@ import ra.webmovieapp.service.UserService;
 
 @RestController
 @RequestMapping("/v1/user/account")
+@CrossOrigin("*")
 public class UAccountController {
     @Autowired
     private UserService userService;

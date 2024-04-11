@@ -14,6 +14,7 @@ import ra.webmovieapp.service.FollowService;
 
 @RestController
 @RequestMapping("/v1/user/follow")
+@CrossOrigin("*")
 public class UFollowController {
     @Autowired
     private FollowService followService;

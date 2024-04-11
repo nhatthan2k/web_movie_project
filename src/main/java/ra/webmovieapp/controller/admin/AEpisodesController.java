@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/admin/episode")
+@CrossOrigin("*")
 public class AEpisodesController {
     @Autowired
     private EpisodeService episodeService;
