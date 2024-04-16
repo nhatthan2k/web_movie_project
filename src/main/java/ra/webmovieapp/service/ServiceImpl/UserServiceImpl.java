@@ -48,6 +48,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Page<User> searchUsers(String keyWord, Pageable pageable) {
+        if (keyWord.isEmpty ()) {
+            return userRepository.findAllUser ( pageable );
+        } else {
+            return userRepository.findAllByFullNameOrUsernameContainingIgnoreCase ( keyWord, keyWord , pageable );
+        }
+    }
+
+    @Override
     public User getUserById(Long userId) {
         return userRepository.findById(userId).orElse(null);
     }

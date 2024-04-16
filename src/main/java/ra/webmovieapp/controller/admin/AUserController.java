@@ -31,20 +31,21 @@ public class AUserController {
             @RequestParam(defaultValue = "5", name = "limit") int limit,
             @RequestParam(defaultValue = "0", name = "page") int page,
             @RequestParam(defaultValue = "username", name = "sort") String sort,
-            @RequestParam(defaultValue = "asc", name = "order") String order
+            @RequestParam(defaultValue = "asc", name = "order") String order,
+            @RequestParam("search") String search
     ) throws CustomException {
         try {
             Pageable pageable;
             if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
             else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
-            Page<User> users = userService.getAllUsers(pageable);
+            Page<User> users = userService.searchUsers (search,pageable);
             if (users.getContent().isEmpty()) throw new CustomException("User rỗng nhaaa");
             return new ResponseEntity<>(
                     new ResponseWrapper<>(
                             EHttpStatus.SUCCESS,
                             HttpStatus.OK.value(),
                             HttpStatus.OK.name(),
-                            users.getContent()
+                            users
                     ), HttpStatus.OK
             );
         } catch (Exception exception) {
