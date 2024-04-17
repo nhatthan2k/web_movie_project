@@ -38,7 +38,7 @@ public class AUserController {
             Pageable pageable;
             if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
             else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
-            Page<User> users = userService.searchUsers (search,pageable);
+            Page<User> users = userService.searchUsers (search, pageable);
             if (users.getContent().isEmpty()) throw new CustomException("User rỗng nhaaa");
             return new ResponseEntity<>(
                     new ResponseWrapper<>(
@@ -58,7 +58,7 @@ public class AUserController {
         try {
             Long id = Long.parseLong(userId);
             User user = userService.getUserById(id);
-            if (user == null) {
+            if (user != null) {
                 if (user.getId().equals(userLogin.getUserLoggedIn().getId())) {
                     throw new CustomException("Cant switch this account status");
                 }
