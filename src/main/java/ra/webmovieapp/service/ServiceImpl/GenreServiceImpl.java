@@ -24,6 +24,11 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
+    public Page<Genre> searchGenreByGenreName(Pageable pageable) {
+        return null;
+    }
+
+    @Override
     public Optional<Genre> getGenreById(Long genreId) {
         return genreRepository.findById(genreId);
     }

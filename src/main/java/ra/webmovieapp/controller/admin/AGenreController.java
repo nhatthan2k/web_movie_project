@@ -17,7 +17,7 @@ import ra.webmovieapp.service.GenreService;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/v1/admin/genre")
+@RequestMapping("/v1/admin/genres")
 @CrossOrigin("*")
 public class AGenreController {
     @Autowired
@@ -28,7 +28,8 @@ public class AGenreController {
             @RequestParam(defaultValue = "5", name = "limit") int limit,
             @RequestParam(defaultValue = "0", name = "page") int page,
             @RequestParam(defaultValue = "genreName", name = "sort") String sort,
-            @RequestParam(defaultValue = "asc", name = "order") String order
+            @RequestParam(defaultValue = "asc", name = "order") String order,
+            @RequestParam("search") String search
     ) throws CustomException {
         Pageable pageable;
         if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());

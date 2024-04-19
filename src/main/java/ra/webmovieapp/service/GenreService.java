@@ -11,6 +11,8 @@ import java.util.Optional;
 public interface GenreService {
     Page<Genre> getAllGenres(Pageable pageable);
 
+    Page<Genre> searchGenreByGenreName(Pageable pageable);
+
     Optional<Genre> getGenreById(Long genreId);
 
     Genre save(Genre genreReq);
