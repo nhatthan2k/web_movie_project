@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface GenreService {
     Page<Genre> getAllGenres(Pageable pageable);
 
-    Page<Genre> searchGenreByGenreName(Pageable pageable);
+    Page<Genre> searchGenreByGenreName(String keyword ,Pageable pageable);
 
     Optional<Genre> getGenreById(Long genreId);
 
@@ -19,9 +19,9 @@ public interface GenreService {
 
     Genre updateGenre(Long genreId, Genre genreReq) throws CustomException;
 
-    void softDeteleByGenreId(Long genreId) throws CustomException;
+    void changeStatusByGenreId(Long genreId) throws CustomException;
 
-    void hardDeleteByGenreId(Long genreId) throws CustomException;
+    void DeleteByGenreId(Long genreId) throws CustomException;
 
     List<Genre> getGenresOnActive();
     List<Genre> getByNameOrDes(String name, String description);

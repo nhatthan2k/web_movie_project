@@ -18,14 +18,19 @@ import java.util.Optional;
 public class GenreServiceImpl implements GenreService {
     @Autowired
     private GenreRepository genreRepository;
+
     @Override
     public Page<Genre> getAllGenres(Pageable pageable) {
         return genreRepository.findAll(pageable);
     }
 
     @Override
-    public Page<Genre> searchGenreByGenreName(Pageable pageable) {
-        return null;
+    public Page<Genre> searchGenreByGenreName(String keyword, Pageable pageable) {
+        if (keyword.isEmpty()) {
+            return genreRepository.findAll(pageable);
+        } else {
+            return genreRepository.findAllByGenreNameContainingIgnoreCase(keyword, pageable);
+        }
     }
 
     @Override
@@ -40,7 +45,7 @@ public class GenreServiceImpl implements GenreService {
                 .description(genreReq.getDescription())
                 .status(genreReq.getStatus())
                 .build();
-        return genreRepository.save(genre) ;
+        return genreRepository.save(genre);
     }
 
     @Override
@@ -55,15 +60,16 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public void softDeteleByGenreId(Long genreId) throws CustomException {
+    public void changeStatusByGenreId(Long genreId) throws CustomException {
         Optional<Genre> deleteGenre = getGenreById(genreId);
-        if(deleteGenre.isEmpty()) throw new CustomException("Thể loại không tồn tại nhaaa!!");
+        if (deleteGenre.isEmpty()) throw new CustomException("Thể loại không tồn tại nhaaa!!");
         Genre genre = deleteGenre.get();
-        if(genre.getStatus()){genre.setStatus(false);} throw new CustomException("Thể loại đã khóa");
+        genre.setStatus(!genre.getStatus());
+        genreRepository.save(genre);
     }
 
     @Override
-    public void hardDeleteByGenreId(Long genreId) throws CustomException {
+    public void DeleteByGenreId(Long genreId) throws CustomException {
         if (!genreRepository.existsById(genreId)) throw new CustomException("Không thấy ID nhaaa!!");
         genreRepository.deleteById(genreId);
     }

@@ -25,7 +25,7 @@ public class AGenreController {
 
     @GetMapping
     public ResponseEntity<?> getAllGenresToPage(
-            @RequestParam(defaultValue = "5", name = "limit") int limit,
+            @RequestParam(defaultValue = "10", name = "limit") int limit,
             @RequestParam(defaultValue = "0", name = "page") int page,
             @RequestParam(defaultValue = "genreName", name = "sort") String sort,
             @RequestParam(defaultValue = "asc", name = "order") String order,
@@ -34,14 +34,14 @@ public class AGenreController {
         Pageable pageable;
         if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
         else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
-        Page<Genre> genres = genreService.getAllGenres(pageable);
+        Page<Genre> genres = genreService.searchGenreByGenreName(search, pageable);
         if (genres.getContent().isEmpty()) throw new CustomException("Genre rỗng nhaaa");
         return new ResponseEntity<>(
                 new ResponseWrapper<>(
                         EHttpStatus.SUCCESS,
                         HttpStatus.OK.value(),
                         HttpStatus.OK.name(),
-                        genres.getContent()
+                        genres
                 ), HttpStatus.OK
         );
     }
@@ -95,17 +95,17 @@ public class AGenreController {
         }
     }
 
-    @DeleteMapping("/{genreId}")
+    @PutMapping("/{genreId}/status")
     public ResponseEntity<?> softDeleteGenreById(@PathVariable("genreId") String deleteGenreId) throws CustomException {
         try {
             Long id = Long.parseLong(deleteGenreId);
-            genreService.softDeteleByGenreId(id);
+            genreService.changeStatusByGenreId(id);
             return new ResponseEntity<>(
                     new ResponseWrapper<>(
                             EHttpStatus.SUCCESS,
                             HttpStatus.OK.value(),
                             HttpStatus.OK.name(),
-                            "Delete genre successfully"
+                            "change status genre successfully"
                     ), HttpStatus.OK);
         } catch (NumberFormatException e) {
             throw new CustomException("Sai định dạng ID rồi nhaa!!");
@@ -116,7 +116,7 @@ public class AGenreController {
     public ResponseEntity<?> hardDeleteMovieById(@PathVariable("genreId") String deleteGenreId) throws CustomException {
         try {
             Long id = Long.parseLong(deleteGenreId);
-            genreService.hardDeleteByGenreId(id);
+            genreService.DeleteByGenreId(id);
             return new ResponseEntity<>(
                     new ResponseWrapper<>(
                             EHttpStatus.SUCCESS,
