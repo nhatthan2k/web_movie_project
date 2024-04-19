@@ -25,9 +25,9 @@ public class AGenreController {
 
     @GetMapping
     public ResponseEntity<?> getAllGenresToPage(
-            @RequestParam(defaultValue = "10", name = "limit") int limit,
+            @RequestParam(defaultValue = "5", name = "limit") int limit,
             @RequestParam(defaultValue = "0", name = "page") int page,
-            @RequestParam(defaultValue = "genreName", name = "sort") String sort,
+            @RequestParam(defaultValue = "id", name = "sort") String sort,
             @RequestParam(defaultValue = "asc", name = "order") String order,
             @RequestParam("search") String search
     ) throws CustomException {
@@ -99,13 +99,13 @@ public class AGenreController {
     public ResponseEntity<?> softDeleteGenreById(@PathVariable("genreId") String deleteGenreId) throws CustomException {
         try {
             Long id = Long.parseLong(deleteGenreId);
-            genreService.changeStatusByGenreId(id);
+            Genre updateGenre = genreService.changeStatusByGenreId(id);
             return new ResponseEntity<>(
                     new ResponseWrapper<>(
                             EHttpStatus.SUCCESS,
                             HttpStatus.OK.value(),
                             HttpStatus.OK.name(),
-                            "change status genre successfully"
+                            updateGenre
                     ), HttpStatus.OK);
         } catch (NumberFormatException e) {
             throw new CustomException("Sai định dạng ID rồi nhaa!!");

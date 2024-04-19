@@ -19,7 +19,7 @@ public interface GenreService {
 
     Genre updateGenre(Long genreId, Genre genreReq) throws CustomException;
 
-    void changeStatusByGenreId(Long genreId) throws CustomException;
+    Genre changeStatusByGenreId(Long genreId) throws CustomException;
 
     void DeleteByGenreId(Long genreId) throws CustomException;
 

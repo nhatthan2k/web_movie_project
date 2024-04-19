@@ -30,7 +30,7 @@ public class AUserController {
     public ResponseEntity<?> getAllUsersToPage(
             @RequestParam(defaultValue = "5", name = "limit") int limit,
             @RequestParam(defaultValue = "0", name = "page") int page,
-            @RequestParam(defaultValue = "username", name = "sort") String sort,
+            @RequestParam(defaultValue = "id", name = "sort") String sort,
             @RequestParam(defaultValue = "asc", name = "order") String order,
             @RequestParam("search") String search
     ) throws CustomException {

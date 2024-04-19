@@ -60,12 +60,12 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public void changeStatusByGenreId(Long genreId) throws CustomException {
+    public Genre changeStatusByGenreId(Long genreId) throws CustomException {
         Optional<Genre> deleteGenre = getGenreById(genreId);
         if (deleteGenre.isEmpty()) throw new CustomException("Thể loại không tồn tại nhaaa!!");
         Genre genre = deleteGenre.get();
         genre.setStatus(!genre.getStatus());
-        genreRepository.save(genre);
+        return genreRepository.save(genre);
     }
 
     @Override
