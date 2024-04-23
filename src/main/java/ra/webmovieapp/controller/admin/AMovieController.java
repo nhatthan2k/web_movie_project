@@ -13,8 +13,10 @@ import ra.webmovieapp.exception.CustomException;
 import ra.webmovieapp.model.dto.wrapper.ResponseWrapper;
 import ra.webmovieapp.model.entity.Movie;
 import ra.webmovieapp.model.enums.EHttpStatus;
+import ra.webmovieapp.repository.MovieRepository;
 import ra.webmovieapp.service.MovieService;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -23,27 +25,40 @@ import java.util.Optional;
 public class AMovieController {
     @Autowired
     private MovieService movieService;
+    @Autowired
+    private MovieRepository movieRepository;
 
     @GetMapping
     public ResponseEntity<?> getAllMoviesToPage(
             @RequestParam(defaultValue = "5", name = "limit") int limit,
             @RequestParam(defaultValue = "0", name = "page") int page,
-            @RequestParam(defaultValue = "name", name = "sort") String sort,
-            @RequestParam(defaultValue = "asc", name = "order") String order
+            @RequestParam(defaultValue = "id", name = "sort") String sort,
+            @RequestParam(defaultValue = "asc", name = "order") String order,
+            @RequestParam("genreId") String genreId,
+            @RequestParam("search") String keyword
     ) throws CustomException {
-        Pageable pageable;
-        if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
-        else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
-        Page<Movie> movies = movieService.getAllMovie(pageable);
-        if (movies.getContent().isEmpty()) throw new CustomException("Movie rỗng nhaaa");
-        return new ResponseEntity<>(
-                new ResponseWrapper<>(
-                        EHttpStatus.SUCCESS,
-                        HttpStatus.OK.value(),
-                        HttpStatus.OK.name(),
-                        movies.getContent()
-                ), HttpStatus.OK
-        );
+        try {
+            Long id = null;
+            if (!genreId.trim ().isEmpty ()){
+                id = Long.parseLong ( genreId.trim () );
+            }
+            Pageable pageable;
+            if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
+            else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
+            Page<Movie> movies = movieService.searchMovieByGenreAndKeyword (id, keyword, pageable );
+            if (movies.getContent().isEmpty()) throw new CustomException("Movie rỗng nhaaa");
+            return new ResponseEntity<>(
+                    new ResponseWrapper<>(
+                            EHttpStatus.SUCCESS,
+                            HttpStatus.OK.value(),
+                            HttpStatus.OK.name(),
+                            movies
+                    ), HttpStatus.OK
+            );
+        } catch (NumberFormatException e){
+            throw new CustomException ("Sai định dạng ID rồi nhaa!!");
+        }
+
     }
 
     @GetMapping("/{movieId}")
@@ -139,6 +154,5 @@ public class AMovieController {
         } catch (NumberFormatException e) {
             throw new CustomException("Sai định dạng ID rồi nhaa!!");
         }
-
     }
 }
