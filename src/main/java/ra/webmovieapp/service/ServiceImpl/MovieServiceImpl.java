@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ra.webmovieapp.exception.CustomException;
+import ra.webmovieapp.model.entity.GenreDetail;
 import ra.webmovieapp.model.entity.Movie;
 import ra.webmovieapp.repository.MovieRepository;
 import ra.webmovieapp.service.MovieService;
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class MovieServiceImpl implements MovieService {
     @Autowired
     private MovieRepository movieRepository;
+
     @Override
     public Page<Movie> getAllMovie(Pageable pageable) {
         return movieRepository.findAll(pageable);
@@ -65,6 +67,11 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<Movie> getMovieOnInactive() {
         return movieRepository.findAllByStatus(false);
+    }
+
+    @Override
+    public Page<Movie> searchMovieByGenreAndKeyword(Long genreId, String keyword, Pageable pageable) {
+        return movieRepository.findMoviesByGenreAndKeyword (genreId ,keyword , pageable );
     }
 
     @Override
