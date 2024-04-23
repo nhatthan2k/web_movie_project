@@ -70,8 +70,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Page<Movie> searchMovieByGenreAndKeyword(Long genreId, String keyword, Pageable pageable) {
-        return movieRepository.findMoviesByGenreAndKeyword (genreId ,keyword , pageable );
+    public Page<Movie> searchMovieByGenreAndKeyword(String genre, String keyword, Pageable pageable) {
+        return movieRepository.findMoviesByGenreAndKeyword (genre ,keyword , pageable );
     }
 
     @Override
