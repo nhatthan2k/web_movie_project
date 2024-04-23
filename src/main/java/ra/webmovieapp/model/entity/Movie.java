@@ -15,7 +15,7 @@ import java.util.List;
 @Builder
 @Entity
 public class Movie extends BaseModel {
-    private String name;
+    private String movieName;
     private String poster;
     private String description;
     private Boolean status;

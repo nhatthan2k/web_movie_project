@@ -18,7 +18,7 @@ import java.util.Set;
 public interface SeasonRepository extends JpaRepository<Season, Long> {
     Page<Season> findAll(Pageable pageable);
     Page<Season> findAllByMovieStatus(EMovieStatus movieStatus, Pageable pageable);
-    Page<Season> searchByNameOrNickNameContainingIgnoreCase(String name, String nickName, Pageable pageable);
+    Page<Season> searchBySeasonNameOrNickNameContainingIgnoreCase(String name, String nickName, Pageable pageable);
     @Query("select s from Season s join s.movie m join m.genreDetails g where g.genre.id = :genreId")
     Page<Season> findAllByGenreId(Long genreId, Pageable pageable);
 

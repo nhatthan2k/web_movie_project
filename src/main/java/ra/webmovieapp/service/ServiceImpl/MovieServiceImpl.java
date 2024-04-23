@@ -29,7 +29,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie save(Movie movieReq) {
         Movie movie = Movie.builder()
-                .name(movieReq.getName())
+                .movieName(movieReq.getMovieName())
                 .poster(movieReq.getPoster())
                 .description(movieReq.getDescription())
                 .build();
@@ -42,7 +42,7 @@ public class MovieServiceImpl implements MovieService {
         Optional<Movie> updateMovie = getMovieById(movieId);
         if(updateMovie.isEmpty()) throw new CustomException("Phim không tồn tại nhaaa!!");
         Movie movie = updateMovie.get();
-        movie.setName(movieReq.getName());
+        movie.setMovieName(movieReq.getMovieName());
         movie.setPoster(movieReq.getPoster());
         movie.setDescription(movieReq.getDescription());
         return movieRepository.save(movie);

@@ -19,7 +19,7 @@ import ra.webmovieapp.service.SeasonService;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/v1/admin/season")
+@RequestMapping("/v1/admin/seasons")
 @CrossOrigin("*")
 public class ASeasonController {
     @Autowired

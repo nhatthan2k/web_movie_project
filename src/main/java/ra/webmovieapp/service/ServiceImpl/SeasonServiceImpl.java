@@ -43,7 +43,7 @@ public class SeasonServiceImpl implements SeasonService {
     public Season save(Season seasonRep) {
         Season season = Season.builder()
                 .nickName(seasonRep.getNickName())
-                .name(seasonRep.getName())
+                .seasonName(seasonRep.getSeasonName())
                 .description(seasonRep.getDescription())
                 .avatar(seasonRep.getAvatar())
                 .movieType(seasonRep.getMovieType())
@@ -58,7 +58,7 @@ public class SeasonServiceImpl implements SeasonService {
         if (updateSeason.isEmpty()) throw new CustomException("Phần phim không tồn tại nhaaa!!");
         Season season = updateSeason.get();
         season.setNickName(seasonReq.getNickName());
-        season.setName(seasonReq.getName());
+        season.setSeasonName(seasonReq.getSeasonName());
         season.setDescription(seasonReq.getDescription());
         season.setAvatar(seasonReq.getAvatar());
         season.setMovieType(seasonReq.getMovieType());
@@ -79,7 +79,7 @@ public class SeasonServiceImpl implements SeasonService {
 
     @Override
     public Page<Season> searchByNameOrNickName(String keyWord, Pageable pageable) {
-        return seasonRepository.searchByNameOrNickNameContainingIgnoreCase(keyWord, keyWord, pageable);
+        return seasonRepository.searchBySeasonNameOrNickNameContainingIgnoreCase(keyWord, keyWord, pageable);
     }
 
     @Override

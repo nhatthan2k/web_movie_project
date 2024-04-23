@@ -19,7 +19,7 @@ import java.util.Set;
 @Entity
 public class Season extends BaseModel {
     private String nickName;
-    private String name;
+    private String seasonName;
     private String description;
     private String avatar;
     @Enumerated(EnumType.STRING)

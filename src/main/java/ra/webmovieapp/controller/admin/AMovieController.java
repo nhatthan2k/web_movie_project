@@ -18,7 +18,7 @@ import ra.webmovieapp.service.MovieService;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/v1/admin/movie")
+@RequestMapping("/v1/admin/movies")
 @CrossOrigin("*")
 public class AMovieController {
     @Autowired
