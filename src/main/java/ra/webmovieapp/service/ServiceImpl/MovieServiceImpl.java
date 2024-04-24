@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ra.webmovieapp.exception.CustomException;
+import ra.webmovieapp.model.dto.request.GenreId;
 import ra.webmovieapp.model.dto.request.MovieRequest;
 import ra.webmovieapp.model.entity.Genre;
 import ra.webmovieapp.model.entity.GenreDetail;
@@ -34,22 +35,21 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie save(MovieRequest movieRequest) {
+    public Movie save(MovieRequest movieRequest) throws CustomException{
         Movie movie = Movie.builder()
                 .movieName(movieRequest.getName ())
                 .poster(movieRequest.getPoster ())
                 .description(movieRequest.getDescription ())
                 .build();
         Movie movieNew = movieRepository.save(movie);
-        for (Genre genre : movieRequest.getGenres ()){
-            genreDetailService.save ( movieNew.getId (), genre.getId () );
+        for (GenreId genreId : movieRequest.getGenreId ()){
+            genreDetailService.save ( movieNew.getId (), genreId.getId () );
         }
         return movieNew;
     }
 
     @Override
     public void saveMovie(MovieRequest movieRequest) {
-
     }
 
 

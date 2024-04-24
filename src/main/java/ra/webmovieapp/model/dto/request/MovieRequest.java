@@ -16,5 +16,5 @@ public class MovieRequest {
     private String name;
     private String poster;
     private String description;
-    private List<Genre> genres;
+    private List<GenreId> genreId;
 }

@@ -14,7 +14,7 @@ public interface MovieService {
 
     Optional<Movie> getMovieById(Long movieId);
 
-    Movie save(MovieRequest movieRequest);
+    Movie save(MovieRequest movieRequest) throws CustomException;
 
     void saveMovie(MovieRequest movieRequest);
 
