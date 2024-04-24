@@ -2,6 +2,9 @@ package ra.webmovieapp.model.dto.request;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
+import ra.webmovieapp.model.entity.Genre;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,4 +16,5 @@ public class MovieRequest {
     private String name;
     private String poster;
     private String description;
+    private List<Genre> genres;
 }
