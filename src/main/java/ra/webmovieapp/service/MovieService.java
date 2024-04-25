@@ -3,6 +3,7 @@ package ra.webmovieapp.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import ra.webmovieapp.exception.CustomException;
+import ra.webmovieapp.model.dto.request.MovieRequest;
 import ra.webmovieapp.model.entity.Movie;
 
 import java.util.List;
@@ -13,7 +14,9 @@ public interface MovieService {
 
     Optional<Movie> getMovieById(Long movieId);
 
-    Movie save(Movie movieRep);
+    Movie save(MovieRequest movieRequest) throws CustomException;
+
+    void saveMovie(MovieRequest movieRequest);
 
     Movie updateMovie(Long movieId, Movie movieReq) throws CustomException;
 

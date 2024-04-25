@@ -5,9 +5,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ra.webmovieapp.exception.CustomException;
+import ra.webmovieapp.model.dto.request.GenreId;
+import ra.webmovieapp.model.dto.request.MovieRequest;
+import ra.webmovieapp.model.entity.Genre;
 import ra.webmovieapp.model.entity.GenreDetail;
 import ra.webmovieapp.model.entity.Movie;
 import ra.webmovieapp.repository.MovieRepository;
+import ra.webmovieapp.service.GenreDetailService;
 import ra.webmovieapp.service.MovieService;
 
 import java.util.List;
@@ -17,6 +21,8 @@ import java.util.Optional;
 public class MovieServiceImpl implements MovieService {
     @Autowired
     private MovieRepository movieRepository;
+    @Autowired
+    private GenreDetailService genreDetailService;
 
     @Override
     public Page<Movie> getAllMovie(Pageable pageable) {
@@ -29,15 +35,23 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie save(Movie movieReq) {
+    public Movie save(MovieRequest movieRequest) throws CustomException{
         Movie movie = Movie.builder()
-                .movieName(movieReq.getMovieName())
-                .poster(movieReq.getPoster())
-                .description(movieReq.getDescription())
+                .movieName(movieRequest.getName ())
+                .poster(movieRequest.getPoster ())
+                .description(movieRequest.getDescription ())
                 .build();
-
-        return movieRepository.save(movie);
+        Movie movieNew = movieRepository.save(movie);
+        for (GenreId genreId : movieRequest.getGenreId ()){
+            genreDetailService.save ( movieNew.getId (), genreId.getId () );
+        }
+        return movieNew;
     }
+
+    @Override
+    public void saveMovie(MovieRequest movieRequest) {
+    }
+
 
     @Override
     public Movie updateMovie(Long movieId, Movie movieReq) throws CustomException {

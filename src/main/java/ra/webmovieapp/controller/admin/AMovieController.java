@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import ra.webmovieapp.exception.CustomException;
+import ra.webmovieapp.model.dto.request.MovieRequest;
 import ra.webmovieapp.model.dto.wrapper.ResponseWrapper;
 import ra.webmovieapp.model.entity.Movie;
 import ra.webmovieapp.model.enums.EHttpStatus;
@@ -73,7 +74,7 @@ public class AMovieController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createMovie(@RequestBody Movie movieReq) throws CustomException {
+    public ResponseEntity<?> createMovie(@RequestBody MovieRequest movieReq) throws CustomException {
         return new ResponseEntity<>(
                 new ResponseWrapper<>(
                         EHttpStatus.SUCCESS,
