@@ -20,8 +20,11 @@ public class GenreServiceImpl implements GenreService {
     private GenreRepository genreRepository;
 
     @Override
-    public Page<Genre> getAllGenres(Pageable pageable) {
-        return genreRepository.findAll(pageable);
+    public List<Genre> getAllGenres(String keyword) {
+        if (keyword.isEmpty()) {
+            return genreRepository.findAll();
+        }
+        return genreRepository.findAllByGenreNameContainingIgnoreCase(keyword);
     }
 
     @Override
