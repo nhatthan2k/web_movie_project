@@ -92,7 +92,7 @@ public class AMovieController {
     @PutMapping("/{movieId}")
     public ResponseEntity<?> updateMovie(
             @PathVariable("movieId") String updateMovieId,
-            @RequestBody Movie movie
+            @RequestBody MovieRequest movieRequest
     ) throws CustomException {
         try {
             Long id = Long.parseLong(updateMovieId);
@@ -101,7 +101,7 @@ public class AMovieController {
                             EHttpStatus.SUCCESS,
                             HttpStatus.OK.value(),
                             HttpStatus.OK.name(),
-                            movieService.updateMovie(id, movie)
+                            movieService.updateMovie(id, movieRequest)
                     ), HttpStatus.OK);
         } catch (NumberFormatException e) {
             throw new CustomException("Sai định dạng ID rồi nhaa!!");
@@ -118,7 +118,7 @@ public class AMovieController {
                             EHttpStatus.SUCCESS,
                             HttpStatus.OK.value(),
                             HttpStatus.OK.name(),
-                            "Delete class successfully"
+                            "Delete successfully"
                     ), HttpStatus.OK);
         } catch (NumberFormatException e) {
             throw new CustomException("Sai định dạng ID rồi nhaa!!");
@@ -147,7 +147,7 @@ public class AMovieController {
                             EHttpStatus.SUCCESS,
                             HttpStatus.OK.value(),
                             HttpStatus.OK.name(),
-                            "Delete class successfully"
+                            "Delete successfully"
                     ), HttpStatus.OK);
         } catch (NumberFormatException e) {
             throw new CustomException("Sai định dạng ID rồi nhaa!!");

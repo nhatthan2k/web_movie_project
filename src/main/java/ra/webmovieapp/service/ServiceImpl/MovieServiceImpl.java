@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 import ra.webmovieapp.exception.CustomException;
 import ra.webmovieapp.model.dto.request.GenreId;
 import ra.webmovieapp.model.dto.request.MovieRequest;
-import ra.webmovieapp.model.entity.Genre;
-import ra.webmovieapp.model.entity.GenreDetail;
 import ra.webmovieapp.model.entity.Movie;
 import ra.webmovieapp.repository.MovieRepository;
 import ra.webmovieapp.service.GenreDetailService;
@@ -49,16 +47,11 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public void saveMovie(MovieRequest movieRequest) {
-    }
-
-
-    @Override
-    public Movie updateMovie(Long movieId, Movie movieReq) throws CustomException {
+    public Movie updateMovie(Long movieId, MovieRequest movieReq) throws CustomException {
         Optional<Movie> updateMovie = getMovieById(movieId);
         if(updateMovie.isEmpty()) throw new CustomException("Phim không tồn tại nhaaa!!");
         Movie movie = updateMovie.get();
-        movie.setMovieName(movieReq.getMovieName());
+        movie.setMovieName(movieReq.getName());
         movie.setPoster(movieReq.getPoster());
         movie.setDescription(movieReq.getDescription());
         return movieRepository.save(movie);

@@ -16,9 +16,7 @@ public interface MovieService {
 
     Movie save(MovieRequest movieRequest) throws CustomException;
 
-    void saveMovie(MovieRequest movieRequest);
-
-    Movie updateMovie(Long movieId, Movie movieReq) throws CustomException;
+    Movie updateMovie(Long movieId, MovieRequest movieReq) throws CustomException;
 
     void softDeteleByMovieId(Long movieId) throws CustomException;
 
