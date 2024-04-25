@@ -10,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import ra.webmovieapp.exception.CustomException;
+import ra.webmovieapp.model.dto.mapper.MovieMapper;
 import ra.webmovieapp.model.dto.request.MovieRequest;
+import ra.webmovieapp.model.dto.response.MovieResponse;
 import ra.webmovieapp.model.dto.wrapper.ResponseWrapper;
 import ra.webmovieapp.model.entity.Movie;
 import ra.webmovieapp.model.enums.EHttpStatus;
@@ -26,6 +28,8 @@ import java.util.Optional;
 public class AMovieController {
     @Autowired
     private MovieService movieService;
+    @Autowired
+    private MovieMapper movieMapper;
 
     @GetMapping
     public ResponseEntity<?> getAllMoviesToPage(
@@ -43,7 +47,7 @@ public class AMovieController {
         Pageable pageable;
         if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
         else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
-        Page<Movie> movies = movieService.searchMovieByGenreAndKeyword(genreTrim, keyword, pageable);
+        Page<MovieResponse> movies = movieService.searchMovieByGenreAndKeyword(genreTrim, keyword, pageable).map(movie -> movieMapper.mapMovieTo(movie));
         if (movies.getContent().isEmpty()) throw new CustomException("Movie rỗng nhaaa");
         return new ResponseEntity<>(
                 new ResponseWrapper<>(

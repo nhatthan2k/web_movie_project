@@ -8,7 +8,10 @@ import ra.webmovieapp.model.entity.GenreDetail;
 import ra.webmovieapp.model.entity.GenreDetailId;
 import ra.webmovieapp.model.entity.Movie;
 
+import java.util.List;
+
 @Repository
 public interface GenreDetailRepository extends JpaRepository<GenreDetail, GenreDetailId> {
     Page<Movie> findMovieByGenreId(Long genre_id, Pageable pageable);
+    List<GenreDetail> findByMovie(Movie movie);
 }
