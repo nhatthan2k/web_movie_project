@@ -17,6 +17,6 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     List<Movie> findAllByStatus(Boolean status);
 
     // Tìm kiếm Movie theo Genre and Keyword
-    @Query("select m from GenreDetail gd join Movie m on m.id = gd.movie.id where (:genreId is null OR gd.genre.id = :genreId) AND (:keyword is null or m.movieName like concat('%',:keyword,'%') ESCAPE '!')")
-    Page<Movie> findMoviesByGenreAndKeyword(Long genreId, String keyword, Pageable pageable);
+    @Query("select m from GenreDetail gd join Movie m on m.id = gd.movie.id where (:genre is null OR gd.genre.genreName = :genre) AND (:keyword is null or m.movieName like concat('%',:keyword,'%') ESCAPE '!')")
+    Page<Movie> findMoviesByGenreAndKeyword(String genre, String keyword, Pageable pageable);
 }

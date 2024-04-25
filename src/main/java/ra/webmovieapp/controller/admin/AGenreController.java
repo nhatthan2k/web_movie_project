@@ -14,6 +14,7 @@ import ra.webmovieapp.model.entity.Genre;
 import ra.webmovieapp.model.enums.EHttpStatus;
 import ra.webmovieapp.service.GenreService;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -36,6 +37,19 @@ public class AGenreController {
         else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
         Page<Genre> genres = genreService.searchGenreByGenreName(search, pageable);
         if (genres.getContent().isEmpty()) throw new CustomException("Genre rỗng nhaaa");
+        return new ResponseEntity<>(
+                new ResponseWrapper<>(
+                        EHttpStatus.SUCCESS,
+                        HttpStatus.OK.value(),
+                        HttpStatus.OK.name(),
+                        genres
+                ), HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/no-page")
+    public ResponseEntity<?> getAllGenreNoPage(@RequestParam("search") String search) {
+        List<Genre> genres = genreService.getAllGenres(search);
         return new ResponseEntity<>(
                 new ResponseWrapper<>(
                         EHttpStatus.SUCCESS,

@@ -14,7 +14,11 @@ public interface GenreRepository extends JpaRepository<Genre, Long> {
     Page<Genre> findAll(Pageable pageable);
 
     Page<Genre> findAllByGenreNameContainingIgnoreCase(String genreName, Pageable pageable);
+
+    List<Genre> findAllByGenreNameContainingIgnoreCase(String genreName);
+
     List<Genre> findByStatus(Boolean status);
+
     @Query("select g from Genre g where g.status = true and g.genreName LIKE %?1%")
     List<Genre> findGenreOnActivebyNameAndDes(String name, String description);
 

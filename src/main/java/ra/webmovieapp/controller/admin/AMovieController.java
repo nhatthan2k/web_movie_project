@@ -26,8 +26,6 @@ import java.util.Optional;
 public class AMovieController {
     @Autowired
     private MovieService movieService;
-    @Autowired
-    private MovieRepository movieRepository;
 
     @GetMapping
     public ResponseEntity<?> getAllMoviesToPage(
@@ -35,31 +33,26 @@ public class AMovieController {
             @RequestParam(defaultValue = "0", name = "page") int page,
             @RequestParam(defaultValue = "id", name = "sort") String sort,
             @RequestParam(defaultValue = "asc", name = "order") String order,
-            @RequestParam("genreId") String genreId,
+            @RequestParam("genre") String genre,
             @RequestParam("search") String keyword
     ) throws CustomException {
-        try {
-            Long id = null;
-            if (!genreId.trim ().isEmpty ()){
-                id = Long.parseLong ( genreId.trim () );
-            }
-            Pageable pageable;
-            if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
-            else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
-            Page<Movie> movies = movieService.searchMovieByGenreAndKeyword (id, keyword, pageable );
-            if (movies.getContent().isEmpty()) throw new CustomException("Movie rỗng nhaaa");
-            return new ResponseEntity<>(
-                    new ResponseWrapper<>(
-                            EHttpStatus.SUCCESS,
-                            HttpStatus.OK.value(),
-                            HttpStatus.OK.name(),
-                            movies
-                    ), HttpStatus.OK
-            );
-        } catch (NumberFormatException e){
-            throw new CustomException ("Sai định dạng ID rồi nhaa!!");
+        String genreTrim = genre.trim();
+        if (genreTrim.isEmpty() || genreTrim.equals("ALL")) {
+            genreTrim = null;
         }
-
+        Pageable pageable;
+        if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
+        else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
+        Page<Movie> movies = movieService.searchMovieByGenreAndKeyword(genreTrim, keyword, pageable);
+        if (movies.getContent().isEmpty()) throw new CustomException("Movie rỗng nhaaa");
+        return new ResponseEntity<>(
+                new ResponseWrapper<>(
+                        EHttpStatus.SUCCESS,
+                        HttpStatus.OK.value(),
+                        HttpStatus.OK.name(),
+                        movies
+                ), HttpStatus.OK
+        );
     }
 
     @GetMapping("/{movieId}")
@@ -127,6 +120,7 @@ public class AMovieController {
             throw new CustomException("Sai định dạng ID rồi nhaa!!");
         }
     }
+
     @GetMapping("/Inactive")
     public ResponseEntity<?> getMovieOnInactive() throws CustomException {
         return new ResponseEntity<>(
@@ -137,7 +131,6 @@ public class AMovieController {
                         movieService.getMovieOnInactive()
                 ), HttpStatus.OK);
     }
-
 
 
     @DeleteMapping("/delete/{movieId}")

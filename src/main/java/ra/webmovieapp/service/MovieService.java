@@ -26,6 +26,6 @@ public interface MovieService {
 
     List<Movie> getMovieOnInactive();
     //Tìm kiếm Movie theo Genre and Keyword
-    Page<Movie> searchMovieByGenreAndKeyword(Long genreId ,String keyword, Pageable pageable);
+    Page<Movie> searchMovieByGenreAndKeyword(String genre ,String keyword, Pageable pageable);
 }
 
