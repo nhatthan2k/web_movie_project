@@ -14,8 +14,9 @@ import java.util.Set;
 @Builder
 public class MovieRequest {
     @NotEmpty(message = "Không được bỏ trống chỗ này nha!!")
-    private String name;
+    private String movieName;
     private String poster;
     private String description;
+    private Boolean status;
     private Set<GenreId> genreId;
 }

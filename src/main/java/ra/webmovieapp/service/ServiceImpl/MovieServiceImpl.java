@@ -35,9 +35,10 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie save(MovieRequest movieRequest) throws CustomException{
         Movie movie = Movie.builder()
-                .movieName(movieRequest.getName ())
+                .movieName(movieRequest.getMovieName ())
                 .poster(movieRequest.getPoster ())
                 .description(movieRequest.getDescription ())
+                .status(movieRequest.getStatus())
                 .build();
         Movie movieNew = movieRepository.save(movie);
         for (GenreId genreId : movieRequest.getGenreId ()){
@@ -51,7 +52,7 @@ public class MovieServiceImpl implements MovieService {
         Optional<Movie> updateMovie = getMovieById(movieId);
         if(updateMovie.isEmpty()) throw new CustomException("Phim không tồn tại nhaaa!!");
         Movie movie = updateMovie.get();
-        movie.setMovieName(movieReq.getName());
+        movie.setMovieName(movieReq.getMovieName());
         movie.setPoster(movieReq.getPoster());
         movie.setDescription(movieReq.getDescription());
         return movieRepository.save(movie);
