@@ -108,6 +108,25 @@ public class AMovieController {
         }
     }
 
+
+    @PutMapping("/{movieId}/status")
+    public ResponseEntity<?> switchMovieStatus(@PathVariable("movieId") String movieId) throws CustomException{
+        try {
+            Long id = Long.parseLong(movieId);
+            Movie movie = movieService.changeMovieStatus(id);
+            return new ResponseEntity<>(
+                    new ResponseWrapper<>(
+                            EHttpStatus.SUCCESS,
+                            HttpStatus.OK.value(),
+                            HttpStatus.OK.name(),
+                            movie
+                    ), HttpStatus.OK);
+        } catch (NumberFormatException e){
+            throw new CustomException("Sai định dạng ID rồi nha");
+        }
+    }
+
+
     @DeleteMapping("/{movieId}")
     public ResponseEntity<?> softDeleteMovieById(@PathVariable("movieId") String deleteMovieId) throws CustomException {
         try {
