@@ -5,6 +5,7 @@ import lombok.*;
 import ra.webmovieapp.model.entity.Genre;
 
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,5 +17,5 @@ public class MovieRequest {
     private String name;
     private String poster;
     private String description;
-    private List<GenreId> genreId;
+    private Set<GenreId> genreId;
 }
