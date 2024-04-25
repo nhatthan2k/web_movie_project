@@ -59,6 +59,15 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    public Movie changeMovieStatus(Long movieId) throws CustomException{
+        Movie movie = movieRepository.findById(movieId).orElse(null);
+        if (movie == null)throw new CustomException("Không tìm thấy movie");
+        movie.setStatus(!movie.getStatus());
+
+        return movieRepository.save(movie);
+    }
+
+    @Override
     public void softDeteleByMovieId(Long movieId) throws CustomException{
         Optional<Movie> deleteMovie = getMovieById(movieId);
         if(deleteMovie.isEmpty()) throw new CustomException("Phim không tồn tại nhaaa!!");

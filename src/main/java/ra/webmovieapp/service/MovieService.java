@@ -18,6 +18,8 @@ public interface MovieService {
 
     Movie updateMovie(Long movieId, MovieRequest movieReq) throws CustomException;
 
+    Movie changeMovieStatus(Long movieId) throws CustomException;
+
     void softDeteleByMovieId(Long movieId) throws CustomException;
 
     void hardDeleteByMovieId(Long movieId) throws CustomException;
