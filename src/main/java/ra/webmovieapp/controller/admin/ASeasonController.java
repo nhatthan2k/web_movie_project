@@ -30,19 +30,24 @@ public class ASeasonController {
             @RequestParam(defaultValue = "5", name = "limit") int limit,
             @RequestParam(defaultValue = "0", name = "page") int page,
             @RequestParam(defaultValue = "nickName", name = "sort") String sort,
-            @RequestParam(defaultValue = "asc", name = "order") String order
+            @RequestParam(defaultValue = "asc", name = "order") String order,
+            @RequestParam("movie") String movie,
+            @RequestParam("search") String keyword
     ) throws CustomException {
+        String movieTrim = movie.trim();
+        if (movieTrim.isEmpty() || movieTrim.equals("ALL")) {
+            movieTrim = null;
+        }
         Pageable pageable;
         if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
         else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
-        Page<Season> season = seasonService.getAllSeason(pageable);
-        if (season.getContent().isEmpty()) throw new CustomException("Season rỗng nhaaa");
+        Page<Season> season = seasonService.searchSeasonByGenreAndKeyword(movieTrim, keyword, pageable);
         return new ResponseEntity<>(
                 new ResponseWrapper<>(
                         EHttpStatus.SUCCESS,
                         HttpStatus.OK.value(),
                         HttpStatus.OK.name(),
-                        season.getContent()
+                        season
                 ), HttpStatus.OK
         );
     }

@@ -30,6 +30,11 @@ public class SeasonServiceImpl implements SeasonService {
     private MovieRepository movieRepository;
 
     @Override
+    public Page<Season> searchSeasonByGenreAndKeyword(String genre, String keyword, Pageable pageable) {
+        return seasonRepository.findSeasonsByGenreAndKeyword(genre, keyword, pageable);
+    }
+
+    @Override
     public Page<Season> getAllSeason(Pageable pageable) {
         return seasonRepository.findAll(pageable);
     }

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SeasonService {
+    Page<Season> searchSeasonByGenreAndKeyword(String genre, String keyword, Pageable pageable);
     Page<Season> getAllSeason(Pageable pageable);
 
     Optional<Season> getSeasonById(Long seasonId);
