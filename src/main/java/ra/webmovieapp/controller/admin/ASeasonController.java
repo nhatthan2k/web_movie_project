@@ -29,7 +29,7 @@ public class ASeasonController {
     public ResponseEntity<?> getAllMoviesToPage(
             @RequestParam(defaultValue = "5", name = "limit") int limit,
             @RequestParam(defaultValue = "0", name = "page") int page,
-            @RequestParam(defaultValue = "nickName", name = "sort") String sort,
+            @RequestParam(defaultValue = "id", name = "sort") String sort,
             @RequestParam(defaultValue = "asc", name = "order") String order,
             @RequestParam("movie") String movie,
             @RequestParam("search") String keyword

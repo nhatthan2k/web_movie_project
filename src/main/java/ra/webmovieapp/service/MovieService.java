@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MovieService {
-    Page<Movie> getAllMovie(Pageable pageable);
+    List<Movie> getAllMovie(String keyWord);
 
     Optional<Movie> getMovieById(Long movieId);
 

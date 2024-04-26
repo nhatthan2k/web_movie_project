@@ -58,6 +58,12 @@ public class AMovieController {
         );
     }
 
+    @GetMapping("/no_page")
+    public ResponseEntity<?> getAllNoPage(@RequestParam("search") String search) {
+        List<Movie> movies = movieService.getAllMovie(search);
+        return new ResponseEntity<>(movies, HttpStatus.OK);
+    }
+
     @GetMapping("/{movieId}")
     public ResponseEntity<?> getMovieById(@PathVariable("movieId") String movieId) throws CustomException {
         try {

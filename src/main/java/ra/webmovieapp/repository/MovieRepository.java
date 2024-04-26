@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
-    Page<Movie> findAll(Pageable pageable);
+    List <Movie> findAllByMovieNameContainingIgnoreCase(String movieName);
 
     List<Movie> findAllByStatus(Boolean status);
 

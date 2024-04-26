@@ -15,6 +15,7 @@ import ra.webmovieapp.service.MovieService;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
 @Service
 public class MovieServiceImpl implements MovieService {
     @Autowired
@@ -23,8 +24,11 @@ public class MovieServiceImpl implements MovieService {
     private GenreDetailService genreDetailService;
 
     @Override
-    public Page<Movie> getAllMovie(Pageable pageable) {
-        return movieRepository.findAll(pageable);
+    public List<Movie> getAllMovie(String keyWord) {
+        if (keyWord.isEmpty()) {
+            return movieRepository.findAll();
+        }
+        return movieRepository.findAllByMovieNameContainingIgnoreCase(keyWord);
     }
 
     @Override
@@ -33,16 +37,16 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie save(MovieRequest movieRequest) throws CustomException{
+    public Movie save(MovieRequest movieRequest) throws CustomException {
         Movie movie = Movie.builder()
-                .movieName(movieRequest.getMovieName ())
-                .poster(movieRequest.getPoster ())
-                .description(movieRequest.getDescription ())
+                .movieName(movieRequest.getMovieName())
+                .poster(movieRequest.getPoster())
+                .description(movieRequest.getDescription())
                 .status(movieRequest.getStatus())
                 .build();
         Movie movieNew = movieRepository.save(movie);
-        for (GenreId genreId : movieRequest.getGenreId ()){
-            genreDetailService.save ( movieNew.getId (), genreId.getId () );
+        for (GenreId genreId : movieRequest.getGenreId()) {
+            genreDetailService.save(movieNew.getId(), genreId.getId());
         }
         return movieNew;
     }
@@ -50,29 +54,32 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie updateMovie(Long movieId, MovieRequest movieReq) throws CustomException {
         Optional<Movie> updateMovie = getMovieById(movieId);
-        if(updateMovie.isEmpty()) throw new CustomException("Phim không tồn tại nhaaa!!");
+        if (updateMovie.isEmpty()) throw new CustomException("Phim không tồn tại nhaaa!!");
         Movie movie = updateMovie.get();
-        movie.setMovieName(movieReq.getMovieName());
-        movie.setPoster(movieReq.getPoster());
-        movie.setDescription(movieReq.getDescription());
+        if (movieReq.getMovieName() != null) movie.setMovieName(movieReq.getMovieName());
+        if (movieReq.getPoster() != null) movie.setPoster(movieReq.getPoster());
+        if (movieReq.getDescription() != null) movie.setDescription(movieReq.getDescription());
         return movieRepository.save(movie);
     }
 
     @Override
-    public Movie changeMovieStatus(Long movieId) throws CustomException{
+    public Movie changeMovieStatus(Long movieId) throws CustomException {
         Movie movie = movieRepository.findById(movieId).orElse(null);
-        if (movie == null)throw new CustomException("Không tìm thấy movie");
+        if (movie == null) throw new CustomException("Không tìm thấy movie");
         movie.setStatus(!movie.getStatus());
 
         return movieRepository.save(movie);
     }
 
     @Override
-    public void softDeteleByMovieId(Long movieId) throws CustomException{
+    public void softDeteleByMovieId(Long movieId) throws CustomException {
         Optional<Movie> deleteMovie = getMovieById(movieId);
-        if(deleteMovie.isEmpty()) throw new CustomException("Phim không tồn tại nhaaa!!");
+        if (deleteMovie.isEmpty()) throw new CustomException("Phim không tồn tại nhaaa!!");
         Movie movie = deleteMovie.get();
-        if(movie.getStatus()){movie.setStatus(false);} throw new CustomException("Phim đã khóa");
+        if (movie.getStatus()) {
+            movie.setStatus(false);
+        }
+        throw new CustomException("Phim đã khóa");
     }
 
 //    @Override
@@ -88,17 +95,18 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Page<Movie> searchMovieByGenreAndKeyword(String genre, String keyword, Pageable pageable) {
-        return movieRepository.findMoviesByGenreAndKeyword (genre ,keyword , pageable );
+        return movieRepository.findMoviesByGenreAndKeyword(genre, keyword, pageable);
     }
 
     @Override
     public void hardDeleteByMovieId(Long movieId) throws CustomException {
         List<Movie> movieList = getMovieOnInactive();
 
-        for (Movie movie: movieList) {
+        for (Movie movie : movieList) {
             if (Objects.equals(movie.getId(), movieId)) {
                 movieList.remove(movie);
-            } throw new CustomException("Id không nằm trong danh sách được xóa!!");
+            }
+            throw new CustomException("Id không nằm trong danh sách được xóa!!");
         }
     }
 
