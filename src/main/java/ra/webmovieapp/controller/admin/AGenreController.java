@@ -36,7 +36,6 @@ public class AGenreController {
         if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
         else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
         Page<Genre> genres = genreService.searchGenreByGenreName(search, pageable);
-        if (genres.getContent().isEmpty()) throw new CustomException("Genre rỗng nhaaa");
         return new ResponseEntity<>(
                 new ResponseWrapper<>(
                         EHttpStatus.SUCCESS,
