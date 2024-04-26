@@ -48,7 +48,6 @@ public class AMovieController {
         if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
         else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
         Page<MovieResponse> movies = movieService.searchMovieByGenreAndKeyword(genreTrim, keyword, pageable).map(movie -> movieMapper.mapMovieTo(movie));
-        if (movies.getContent().isEmpty()) throw new CustomException("Movie rỗng nhaaa");
         return new ResponseEntity<>(
                 new ResponseWrapper<>(
                         EHttpStatus.SUCCESS,

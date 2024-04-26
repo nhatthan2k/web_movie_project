@@ -39,7 +39,6 @@ public class AUserController {
             if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
             else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
             Page<User> users = userService.searchUsers (search, pageable);
-            if (users.getContent().isEmpty()) throw new CustomException("User rỗng nhaaa");
             return new ResponseEntity<>(
                     new ResponseWrapper<>(
                             EHttpStatus.SUCCESS,
