@@ -39,7 +39,7 @@ public class AMovieController {
             @RequestParam(defaultValue = "asc", name = "order") String order,
             @RequestParam("genre") String genre,
             @RequestParam("search") String keyword
-    ) throws CustomException {
+    ) {
         String genreTrim = genre.trim();
         if (genreTrim.isEmpty() || genreTrim.equals("ALL")) {
             genreTrim = null;
@@ -47,13 +47,14 @@ public class AMovieController {
         Pageable pageable;
         if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
         else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
-        Page<MovieResponse> movies = movieService.searchMovieByGenreAndKeyword(genreTrim, keyword, pageable).map(movie -> movieMapper.mapMovieTo(movie));
+        Page<Movie> movies = movieService.searchMovieByGenreAndKeyword(genreTrim, keyword, pageable);
+        Page<MovieResponse> movieResponses = movies.map(movie -> movieMapper.mapMovieTo(movie));
         return new ResponseEntity<>(
                 new ResponseWrapper<>(
                         EHttpStatus.SUCCESS,
                         HttpStatus.OK.value(),
                         HttpStatus.OK.name(),
-                        movies
+                        movieResponses
                 ), HttpStatus.OK
         );
     }
@@ -115,7 +116,7 @@ public class AMovieController {
 
 
     @PutMapping("/{movieId}/status")
-    public ResponseEntity<?> switchMovieStatus(@PathVariable("movieId") String movieId) throws CustomException{
+    public ResponseEntity<?> switchMovieStatus(@PathVariable("movieId") String movieId) throws CustomException {
         try {
             Long id = Long.parseLong(movieId);
             Movie movie = movieService.changeMovieStatus(id);
@@ -126,7 +127,7 @@ public class AMovieController {
                             HttpStatus.OK.name(),
                             movie
                     ), HttpStatus.OK);
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new CustomException("Sai định dạng ID rồi nha");
         }
     }

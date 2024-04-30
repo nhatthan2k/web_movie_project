@@ -5,28 +5,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ra.webmovieapp.exception.CustomException;
+import ra.webmovieapp.model.dto.request.GenreId;
 import ra.webmovieapp.model.dto.wrapper.ResponseWrapper;
-import ra.webmovieapp.model.entity.GenreDetail;
-import ra.webmovieapp.model.entity.Season;
 import ra.webmovieapp.model.enums.EHttpStatus;
 import ra.webmovieapp.service.GenreDetailService;
 
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/v1/admin")
+@RequestMapping("/v1/admin/movie")
+@CrossOrigin("*")
 public class AGenreDetailController {
 
     @Autowired
     private GenreDetailService genreDetailService;
 
-    @PostMapping("/movie/{movieId}/genre/{genreId}")
+    @PostMapping("/{movieId}/genre")
     public ResponseEntity<?> addGenreDetail(@PathVariable("movieId") String movie,
-                                            @PathVariable("genreId") String genre) throws CustomException, NumberFormatException {
+                                            @RequestBody GenreId genreId) throws CustomException, NumberFormatException {
         try {
-            Long moiveId = Long.parseLong(movie);
-            Long genreId = Long.parseLong(genre);
-            genreDetailService.add(moiveId, genreId);
+            Long movieId = Long.parseLong(movie);
+            genreDetailService.add(movieId, genreId.getId());
             return new ResponseEntity<>(
                     new ResponseWrapper<>(
                             EHttpStatus.SUCCESS,
@@ -38,16 +36,15 @@ public class AGenreDetailController {
         } catch (NumberFormatException e) {
             throw new CustomException("Sai định dạng ID rồi nhaa!!");
         }
-
     }
 
-    @DeleteMapping("/movie/{movieId}/genre/{genreId}")
+    @DeleteMapping("/{movieId}/genre/{genreId}")
     public ResponseEntity<?> deleteGenreDetail(@PathVariable("movieId") String movie,
-                                            @PathVariable("genreId") String genre) throws CustomException, NumberFormatException {
+                                               @PathVariable("genreId") String genre) throws CustomException, NumberFormatException {
         try {
-            Long moiveId = Long.parseLong(movie);
+            Long movieId = Long.parseLong(movie);
             Long genreId = Long.parseLong(genre);
-            genreDetailService.delete(moiveId, genreId);
+            genreDetailService.delete(movieId, genreId);
             return new ResponseEntity<>(
                     new ResponseWrapper<>(
                             EHttpStatus.SUCCESS,
@@ -55,11 +52,8 @@ public class AGenreDetailController {
                             HttpStatus.OK.name(),
                             "Delete successfully"
                     ), HttpStatus.OK);
-
         } catch (NumberFormatException e) {
             throw new CustomException("Sai định dạng ID rồi nhaa!!");
         }
-
-
     }
 }

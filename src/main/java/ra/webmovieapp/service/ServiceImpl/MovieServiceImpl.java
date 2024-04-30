@@ -95,6 +95,9 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Page<Movie> searchMovieByGenreAndKeyword(String genre, String keyword, Pageable pageable) {
+        if (genre == null && keyword.isEmpty()) {
+            return movieRepository.findAll(pageable);
+        }
         return movieRepository.findMoviesByGenreAndKeyword(genre, keyword, pageable);
     }
 
