@@ -22,5 +22,4 @@ public class Genre extends BaseModel {
     @OneToMany(mappedBy = "genre")
     @JsonIgnore
     private List<GenreDetail> genreDetails;
-
 }

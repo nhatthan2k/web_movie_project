@@ -27,5 +27,4 @@ public class Movie extends BaseModel {
     @OneToMany(mappedBy = "movie")
     @JsonIgnore
     private List<GenreDetail> genreDetails;
-
 }

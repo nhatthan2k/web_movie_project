@@ -6,6 +6,7 @@ import jakarta.persistence.Enumerated;
 import lombok.*;
 import ra.webmovieapp.model.base.BaseModel;
 import ra.webmovieapp.model.enums.ERoleName;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

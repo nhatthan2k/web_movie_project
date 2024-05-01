@@ -51,7 +51,9 @@ public class SeasonServiceImpl implements SeasonService {
                 .seasonName(seasonRep.getSeasonName())
                 .description(seasonRep.getDescription())
                 .avatar(seasonRep.getAvatar())
-                .movieType(seasonRep.getMovieType())
+                .status(true)
+                .seasonType(seasonRep.getSeasonType())
+                .seasonStatus(seasonRep.getSeasonStatus())
                 .release_date(seasonRep.getRelease_date())
                 .build();
         return seasonRepository.save(season);
@@ -66,7 +68,7 @@ public class SeasonServiceImpl implements SeasonService {
         season.setSeasonName(seasonReq.getSeasonName());
         season.setDescription(seasonReq.getDescription());
         season.setAvatar(seasonReq.getAvatar());
-        season.setMovieType(seasonReq.getMovieType());
+        season.setSeasonType(seasonReq.getSeasonType());
         season.setRelease_date(seasonReq.getRelease_date());
         return seasonRepository.save(season);
     }

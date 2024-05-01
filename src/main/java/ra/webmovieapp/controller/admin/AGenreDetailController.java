@@ -31,7 +31,7 @@ public class AGenreDetailController {
                             HttpStatus.OK.value(),
                             HttpStatus.OK.name(),
                             "Add successfully"
-                    ), HttpStatus.OK);
+                    ), HttpStatus.CREATED);
 
         } catch (NumberFormatException e) {
             throw new CustomException("Sai định dạng ID rồi nhaa!!");

@@ -7,6 +7,7 @@ import ra.webmovieapp.model.base.BaseModel;
 
 import java.util.List;
 import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -22,6 +23,7 @@ public class User extends BaseModel {
     private Boolean status;
     private String phone;
     private String address;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
@@ -29,9 +31,11 @@ public class User extends BaseModel {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
+
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Follow> follows;
+
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Comment> comments;

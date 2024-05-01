@@ -22,10 +22,11 @@ public class Season extends BaseModel {
     private String seasonName;
     private String description;
     private String avatar;
+    private Boolean status;
     @Enumerated(EnumType.STRING)
-    private EMovieType movieType;
+    private EMovieType seasonType;
     @Enumerated(EnumType.STRING)
-    private EMovieStatus movieStatus;
+    private EMovieStatus seasonStatus;
     private LocalDate release_date;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -51,11 +52,4 @@ public class Season extends BaseModel {
     @ManyToOne
     @JoinColumn(name = "movie_id", referencedColumnName = "id")
     private Movie movie;
-
-
-
-
-
-
-
 }

@@ -5,6 +5,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
 import ra.webmovieapp.model.base.BaseModel;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

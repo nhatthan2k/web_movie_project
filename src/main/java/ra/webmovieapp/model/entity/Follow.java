@@ -5,6 +5,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
 import ra.webmovieapp.model.base.BaseModel;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -19,6 +20,4 @@ public class Follow extends BaseModel {
     @ManyToOne
     @JoinColumn(name = "season_id", referencedColumnName = "id")
     private Season season;
-
-
 }
