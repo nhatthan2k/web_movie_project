@@ -14,8 +14,9 @@ import java.util.List;
 public interface FollowRepository extends JpaRepository<Follow, Long> {
     @Query("select f.season from Follow f where f.user.id = :userId")
     List<Season> findSeasonByUserId(Long userId);
-//    void deleteBySeasonAndUser(Season season, User user);
+
     @Query("delete from Follow f where f.user.id = :userId and f.season.id = :seasonId")
-    void  deleteBySeasonIdAndUserId(Long seasonId, Long userId);
+    void deleteBySeasonIdAndUserId(Long seasonId, Long userId);
+
     boolean existsBySeason(Season season);
 }

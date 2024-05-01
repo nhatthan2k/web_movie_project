@@ -112,6 +112,4 @@ public class MovieServiceImpl implements MovieService {
             throw new CustomException("Id không nằm trong danh sách được xóa!!");
         }
     }
-
-
 }

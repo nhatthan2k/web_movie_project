@@ -44,7 +44,7 @@ public class GenreDetailServiceImpl implements GenreDetailService {
 
     @Override
     public void add(Long movieId, Long genreId) throws CustomException {
-        Genre genre= genreRepository.findById(genreId).orElse(null);
+        Genre genre = genreRepository.findById(genreId).orElse(null);
         if (genre == null) throw new CustomException("Không tìm thấy Genre");
         Movie movie = movieRepository.findById(movieId).orElse(null);
         if (movie == null) throw new CustomException("Không tìm thấy Movie");
@@ -56,7 +56,7 @@ public class GenreDetailServiceImpl implements GenreDetailService {
                         .movie(movie)
                         .build();
                 genreDetailRepository.save(genreDetailNew);
-            }else throw new CustomException("Thể loại này đã có rồi!!");
+            } else throw new CustomException("Thể loại này đã có rồi!!");
         }
 
     }
@@ -73,6 +73,5 @@ public class GenreDetailServiceImpl implements GenreDetailService {
                 genreDetailRepository.delete(genreDetail);
             }
         }
-
     }
 }

@@ -21,5 +21,4 @@ public interface GenreRepository extends JpaRepository<Genre, Long> {
 
     @Query("select g from Genre g where g.status = true and g.genreName LIKE %?1%")
     List<Genre> findGenreOnActivebyNameAndDes(String name, String description);
-
 }

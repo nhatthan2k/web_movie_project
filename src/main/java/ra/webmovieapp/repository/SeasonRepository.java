@@ -18,13 +18,18 @@ import java.util.Set;
 public interface SeasonRepository extends JpaRepository<Season, Long> {
     @Query("select s from Season s where (:movie is null OR s.movie.movieName = :movie) AND (:keyword is null or s.seasonName like concat('%',:keyword,'%') ESCAPE '!')")
     Page<Season> findSeasonsByGenreAndKeyword(String movie, String keyword, Pageable pageable);
+
     Page<Season> findAll(Pageable pageable);
-    Page<Season> findAllByMovieStatus(EMovieStatus movieStatus, Pageable pageable);
+
+    Page<Season> findAllBySeasonStatus(EMovieStatus seasonStatus, Pageable pageable);
+
     Page<Season> searchBySeasonNameOrNickNameContainingIgnoreCase(String name, String nickName, Pageable pageable);
+
     @Query("select s from Season s join s.movie m join m.genreDetails g where g.genre.id = :genreId")
     Page<Season> findAllByGenreId(Long genreId, Pageable pageable);
 
-    Page<Season> findAllByMovieType(EMovieType movieType, Pageable pageable);
+    Page<Season> findAllBySeasonType(EMovieType seasonType, Pageable pageable);
+
     @Query("select s from Season s join Day d where d.id = :dayId")
     Page<Season> findAllByDayId(Long dayId, Pageable pageable);
 

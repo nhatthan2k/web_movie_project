@@ -21,6 +21,6 @@ public interface UserService {
     User handleRegister(RegisterRequest registerRequest) throws CustomException;
 
     User updateAcc(InfomationRequest infomationRequest, Long id);
-    User save(User user);
 
+    User save(User user);
 }

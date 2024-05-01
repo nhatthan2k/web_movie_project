@@ -31,7 +31,7 @@ public class EpisodeServiceImpl implements EpisodeService {
     }
 
     @Override
-    public Episode save(Episode episodeReq) throws CustomException{
+    public Episode save(Episode episodeReq) throws CustomException {
         Optional<Season> season = seasonService.getSeasonById(episodeReq.getSeason().getId());
         if (season.isEmpty()) {
             Episode episode = Episode.builder()
@@ -40,7 +40,8 @@ public class EpisodeServiceImpl implements EpisodeService {
                     .source(episodeReq.getSource())
                     .build();
             return episodeRepository.save(episode);
-        } throw new CustomException("Không có phần phim!!");
+        }
+        throw new CustomException("Không có phần phim!!");
     }
 
     @Override

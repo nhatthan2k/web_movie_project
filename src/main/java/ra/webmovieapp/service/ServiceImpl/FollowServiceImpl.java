@@ -45,9 +45,7 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public void deteleSeasonToFollow(Long seasonId, Long userId ) {
+    public void deteleSeasonToFollow(Long seasonId, Long userId) {
         followRepository.deleteBySeasonIdAndUserId(seasonId, userId);
     }
-
-
 }

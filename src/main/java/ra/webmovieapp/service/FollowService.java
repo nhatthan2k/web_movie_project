@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface FollowService {
     List<Season> getAllSeasonByUserId(Long userId);
+
     Follow addSeasonToFollow(FollowRequest followRequest, Long userId) throws CustomException;
 
     void deteleSeasonToFollow(Long seasonId, Long userId);
-
 }
 

@@ -49,10 +49,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<User> searchUsers(String keyWord, Pageable pageable) {
-        if (keyWord.isEmpty ()) {
-            return userRepository.findAllUser ( pageable );
+        if (keyWord.isEmpty()) {
+            return userRepository.findAllUser(pageable);
         } else {
-            return userRepository.findAllByFullNameOrUsernameContainingIgnoreCase ( keyWord, keyWord , pageable );
+            return userRepository.findAllByFullNameOrUsernameContainingIgnoreCase(keyWord, keyWord, pageable);
         }
     }
 
@@ -118,7 +118,7 @@ public class UserServiceImpl implements UserService {
                 .address(infomationRequest.getAddress())
                 .roles(roles)
                 .build();
-                user.setId(id);
+        user.setId(id);
         return userRepository.save(user);
     }
 
@@ -126,6 +126,5 @@ public class UserServiceImpl implements UserService {
     public User save(User user) {
         return userRepository.save(user);
     }
-
 
 }

@@ -81,7 +81,7 @@ public class SeasonServiceImpl implements SeasonService {
 
     @Override
     public Page<Season> getAllByStatus(EMovieStatus movieStatus, Pageable pageable) {
-        return seasonRepository.findAllByMovieStatus(movieStatus, pageable);
+        return seasonRepository.findAllBySeasonStatus(movieStatus, pageable);
     }
 
     @Override
@@ -92,12 +92,12 @@ public class SeasonServiceImpl implements SeasonService {
     @Override
     public Page<Season> getAllByGenreId(Long genreId, Pageable pageable) throws CustomException {
         if (!genreRepository.existsById(genreId)) throw new CustomException("Không tồn tại thể loại này!!");
-        return seasonRepository.findAllByGenreId(genreId,pageable);
+        return seasonRepository.findAllByGenreId(genreId, pageable);
     }
 
     @Override
     public Page<Season> getAllByMovieType(EMovieType movieType, Pageable pageable) throws CustomException {
-        return seasonRepository.findAllByMovieType(movieType, pageable);
+        return seasonRepository.findAllBySeasonType(movieType, pageable);
     }
 
     @Override
@@ -117,5 +117,4 @@ public class SeasonServiceImpl implements SeasonService {
         if (movie.isEmpty()) throw new CustomException("phim không tồn tại");
         return seasonRepository.findAllByMovie(movie.get());
     }
-
 }

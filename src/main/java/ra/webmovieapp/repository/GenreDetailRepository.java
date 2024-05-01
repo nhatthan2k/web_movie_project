@@ -12,6 +12,5 @@ import java.util.List;
 
 @Repository
 public interface GenreDetailRepository extends JpaRepository<GenreDetail, GenreDetailId> {
-    Page<Movie> findMovieByGenreId(Long genre_id, Pageable pageable);
     List<GenreDetail> findByMovie(Movie movie);
 }

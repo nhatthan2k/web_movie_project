@@ -13,6 +13,7 @@ import java.util.Optional;
 
 public interface SeasonService {
     Page<Season> searchSeasonByGenreAndKeyword(String genre, String keyword, Pageable pageable);
+
     Page<Season> getAllSeason(Pageable pageable);
 
     Optional<Season> getSeasonById(Long seasonId);
@@ -22,7 +23,8 @@ public interface SeasonService {
     Season updateSeason(Long seasonId, Season seasonReq) throws CustomException;
 
     void hardDeleteBySeasonId(Long seasonId) throws CustomException;
-//  PermitAll
+
+    //  PermitAll
     Page<Season> getAllByStatus(EMovieStatus movieStatus, Pageable pageable);
 
     Page<Season> searchByNameOrNickName(String keyWord, Pageable pageable);

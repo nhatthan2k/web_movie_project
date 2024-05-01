@@ -25,7 +25,8 @@ public interface MovieService {
     void hardDeleteByMovieId(Long movieId) throws CustomException;
 
     List<Movie> getMovieOnInactive();
+
     //Tìm kiếm Movie theo Genre and Keyword
-    Page<Movie> searchMovieByGenreAndKeyword(String genre ,String keyword, Pageable pageable);
+    Page<Movie> searchMovieByGenreAndKeyword(String genre, String keyword, Pageable pageable);
 }
 

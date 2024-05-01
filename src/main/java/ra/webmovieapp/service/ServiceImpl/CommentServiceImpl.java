@@ -31,7 +31,7 @@ public class CommentServiceImpl implements CommentService {
         return commentRepository.findById(commentId);
     }
 
-    public Comment addComment(CommentRequest commentRequest, Long id) throws CustomException{
+    public Comment addComment(CommentRequest commentRequest, Long id) throws CustomException {
         User user = userService.getUserById(id);
         Optional<Season> season = seasonService.getSeasonById(commentRequest.getSeasonId());
         if (season.isEmpty()) throw new CustomException("Phần phim này không tồn tại!!!");
@@ -46,7 +46,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Comment updateComment(CommentRequestUpdate commentRequestUpdate, Long id, Long commentId) throws CustomException {
         Optional<Comment> updateComment = getCommentById(commentId);
-        if(updateComment.isEmpty()) throw new CustomException("Comment không tồn tại nhaaa!!");
+        if (updateComment.isEmpty()) throw new CustomException("Comment không tồn tại nhaaa!!");
         if (!updateComment.get().getUser().getId().equals(id)) throw new CustomException("Bạn không có quyền sửa");
         Comment comment = updateComment.get();
         comment.setComment(commentRequestUpdate.getComment());
@@ -54,9 +54,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void deleteComment(Long id, Long commentId) throws CustomException{
+    public void deleteComment(Long id, Long commentId) throws CustomException {
         Optional<Comment> deleteComment = getCommentById(commentId);
-        if(deleteComment.isEmpty()) throw new CustomException("Comment không tồn tại nhaaa!!");
+        if (deleteComment.isEmpty()) throw new CustomException("Comment không tồn tại nhaaa!!");
         if (!deleteComment.get().getUser().getId().equals(id)) throw new CustomException("Bạn không thể xóa cmt này!");
         commentRepository.deleteById(commentId);
     }
