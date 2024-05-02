@@ -102,17 +102,17 @@ public class ASeasonController {
         }
     }
 
-    @DeleteMapping("/delete/{seasonId}")
-    public ResponseEntity<?> hardDeleteMovieById(@PathVariable("seasonId") String deleteSeasonId) throws CustomException {
+    @PutMapping("/{seasonId}/status")
+    public ResponseEntity<?> hardDeleteMovieById(@PathVariable("seasonId") String SeasonId) throws CustomException {
         try {
-            Long id = Long.parseLong(deleteSeasonId);
-            seasonService.hardDeleteBySeasonId(id);
+            Long id = Long.parseLong(SeasonId);
+            Season season = seasonService.changeStatus (id);
             return new ResponseEntity<>(
                     new ResponseWrapper<>(
                             EHttpStatus.SUCCESS,
                             HttpStatus.OK.value(),
                             HttpStatus.OK.name(),
-                            "Delete season successfully"
+                            season
                     ), HttpStatus.OK);
         } catch (NumberFormatException e) {
             throw new CustomException("Sai định dạng ID rồi nhaa!!");

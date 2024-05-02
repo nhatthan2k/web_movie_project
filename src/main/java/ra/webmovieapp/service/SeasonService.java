@@ -23,7 +23,7 @@ public interface SeasonService {
 
     Season updateSeason(Long seasonId, SeasonRequest seasonRequest) throws CustomException;
 
-    void hardDeleteBySeasonId(Long seasonId) throws CustomException;
+    Season changeStatus(Long seasonId) throws CustomException;
 
     //  PermitAll
     Page<Season> getAllByStatus(EMovieStatus movieStatus, Pageable pageable);

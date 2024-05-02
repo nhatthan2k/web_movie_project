@@ -92,12 +92,15 @@ public class SeasonServiceImpl implements SeasonService {
         if (seasonRequest.getRelease_date() != null) season.setRelease_date(seasonRequest.getRelease_date());
         if (seasonRequest.getMovieId() != null) {
             Optional<Movie> movie = movieRepository.findById(seasonRequest.getMovieId());
-            if (movie.isPresent()) throw new CustomException("movie không tồn tại!!");
+            if (movie.isEmpty ()) throw new CustomException("movie không tồn tại!!");
             season.setMovie(movie.get());
         }
         ;
         if (seasonRequest.getDays() != null) {
-            Set<Day> days = (Set<Day>) seasonRequest.getDays().stream().map(day -> dayRepository.findByDayName(EDayName.valueOf(day)));
+            Set<Day> days = seasonRequest.getDays()
+                    .stream()
+                    .map(day -> dayRepository.findByDayName(EDayName.valueOf(day)).get())
+                    .collect(Collectors.toSet());
             season.setDays(days);
         }
         ;
@@ -105,9 +108,11 @@ public class SeasonServiceImpl implements SeasonService {
     }
 
     @Override
-    public void hardDeleteBySeasonId(Long seasonId) throws CustomException {
-        if (!seasonRepository.existsById(seasonId)) throw new CustomException("Không thấy ID nhaaa!!");
-        seasonRepository.deleteById(seasonId);
+    public Season changeStatus(Long seasonId) throws CustomException {
+        Season season = seasonRepository.findById ( seasonId ).orElse ( null );
+        if (season == null) throw new CustomException("Không tìm thấy season");
+        season.setStatus ( !season.getStatus () );
+        return seasonRepository.save ( season );
     }
 
     @Override
