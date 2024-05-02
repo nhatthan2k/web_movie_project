@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ra.webmovieapp.exception.CustomException;
+import ra.webmovieapp.model.dto.request.SeasonRequest;
 import ra.webmovieapp.model.entity.Movie;
 import ra.webmovieapp.model.entity.Season;
 import ra.webmovieapp.model.enums.EMovieStatus;
@@ -45,16 +46,16 @@ public class SeasonServiceImpl implements SeasonService {
     }
 
     @Override
-    public Season save(Season seasonRep) {
+    public Season add(SeasonRequest seasonRequest) {
         Season season = Season.builder()
-                .nickName(seasonRep.getNickName())
-                .seasonName(seasonRep.getSeasonName())
-                .description(seasonRep.getDescription())
-                .avatar(seasonRep.getAvatar())
-                .status(true)
-                .seasonType(seasonRep.getSeasonType())
-                .seasonStatus(seasonRep.getSeasonStatus())
-                .release_date(seasonRep.getRelease_date())
+                .nickName(seasonRequest.getNickName())
+                .seasonName(seasonRequest.getSeasonName())
+                .description(seasonRequest.getDescription())
+                .avatar(seasonRequest.getAvatar())
+                .status(seasonRequest.getStatus())
+                .seasonType(seasonRequest.getSeasonType())
+                .seasonStatus(seasonRequest.getSeasonStatus())
+                .release_date(seasonRequest.getRelease_date())
                 .build();
         return seasonRepository.save(season);
     }

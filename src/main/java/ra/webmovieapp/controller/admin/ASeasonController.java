@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ra.webmovieapp.exception.CustomException;
+import ra.webmovieapp.model.dto.request.SeasonRequest;
 import ra.webmovieapp.model.dto.wrapper.ResponseWrapper;
 import ra.webmovieapp.model.entity.Movie;
 import ra.webmovieapp.model.entity.Season;
@@ -33,7 +34,7 @@ public class ASeasonController {
             @RequestParam(defaultValue = "asc", name = "order") String order,
             @RequestParam("movie") String movie,
             @RequestParam("search") String keyword
-    ) throws CustomException {
+    ) {
         String movieTrim = movie.trim();
         if (movieTrim.isEmpty() || movieTrim.equals("ALL")) {
             movieTrim = null;
@@ -71,13 +72,13 @@ public class ASeasonController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createMovie(@RequestBody Season seasonReq) throws CustomException {
+    public ResponseEntity<?> createMovie(@RequestBody SeasonRequest seasonRequest) {
         return new ResponseEntity<>(
                 new ResponseWrapper<>(
                         EHttpStatus.SUCCESS,
                         HttpStatus.OK.value(),
                         HttpStatus.OK.name(),
-                        seasonService.save(seasonReq)
+                        seasonService.add(seasonRequest)
                 ),
                 HttpStatus.CREATED);
     }

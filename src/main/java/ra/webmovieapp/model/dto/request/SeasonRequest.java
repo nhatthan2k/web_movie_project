@@ -20,13 +20,14 @@ public class SeasonRequest {
     @NotEmpty(message = "Không được bỏ trống chỗ này nha!!")
     private String nickName;
     @NotEmpty(message = "Không được bỏ trống chỗ này nha!!")
-    private String name;
+    private String seasonName;
     private String description;
     private String avatar;
+    private Boolean status;
     @Pattern(regexp = "^(?i)(MULTIPLE|SINGLE)$", message = "String value must be 'MULTIPLE | SINGLE'")
-    private EMovieType movieType;
-    @Pattern(regexp = "^(?i)(ACTIVE|INACTIVE)$", message = "String value must be 'ACTIVE | INACTIVE'")
-    private EMovieStatus movieStatus;
+    private EMovieType seasonType;
+    @Pattern(regexp = "^(?i)(COMING|SHOWING|COMPLETE)$", message = "String value must be 'COMING |SHOWING|COMPLETE'")
+    private EMovieStatus seasonStatus;
     private LocalDate release_date;
     private Set<Day> days;
     @NotNull(message = "Không được bỏ trống chỗ này nha!!")

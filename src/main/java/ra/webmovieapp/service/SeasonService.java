@@ -3,6 +3,7 @@ package ra.webmovieapp.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import ra.webmovieapp.exception.CustomException;
+import ra.webmovieapp.model.dto.request.SeasonRequest;
 import ra.webmovieapp.model.entity.Movie;
 import ra.webmovieapp.model.entity.Season;
 import ra.webmovieapp.model.enums.EMovieStatus;
@@ -18,7 +19,7 @@ public interface SeasonService {
 
     Optional<Season> getSeasonById(Long seasonId);
 
-    Season save(Season seasonRep);
+    Season add(SeasonRequest seasonRequest);
 
     Season updateSeason(Long seasonId, Season seasonReq) throws CustomException;
 
