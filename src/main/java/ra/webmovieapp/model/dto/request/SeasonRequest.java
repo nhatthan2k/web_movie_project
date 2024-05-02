@@ -25,11 +25,11 @@ public class SeasonRequest {
     private String avatar;
     private Boolean status;
     @Pattern(regexp = "^(?i)(MULTIPLE|SINGLE)$", message = "String value must be 'MULTIPLE | SINGLE'")
-    private EMovieType seasonType;
+    private String seasonType;
     @Pattern(regexp = "^(?i)(COMING|SHOWING|COMPLETE)$", message = "String value must be 'COMING |SHOWING|COMPLETE'")
-    private EMovieStatus seasonStatus;
+    private String seasonStatus;
     private LocalDate release_date;
-    private Set<Day> days;
+    private Set<String> days;
     @NotNull(message = "Không được bỏ trống chỗ này nha!!")
     private Long movieId;
 }

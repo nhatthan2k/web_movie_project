@@ -19,9 +19,9 @@ public interface SeasonService {
 
     Optional<Season> getSeasonById(Long seasonId);
 
-    Season add(SeasonRequest seasonRequest);
+    Season add(SeasonRequest seasonRequest) throws CustomException;
 
-    Season updateSeason(Long seasonId, Season seasonReq) throws CustomException;
+    Season updateSeason(Long seasonId, SeasonRequest seasonRequest) throws CustomException;
 
     void hardDeleteBySeasonId(Long seasonId) throws CustomException;
 

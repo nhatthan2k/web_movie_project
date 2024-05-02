@@ -6,8 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ra.webmovieapp.exception.CustomException;
 import ra.webmovieapp.model.dto.request.SeasonRequest;
+import ra.webmovieapp.model.entity.Day;
 import ra.webmovieapp.model.entity.Movie;
 import ra.webmovieapp.model.entity.Season;
+import ra.webmovieapp.model.enums.EDayName;
 import ra.webmovieapp.model.enums.EMovieStatus;
 import ra.webmovieapp.model.enums.EMovieType;
 import ra.webmovieapp.repository.DayRepository;
@@ -18,6 +20,8 @@ import ra.webmovieapp.service.SeasonService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class SeasonServiceImpl implements SeasonService {
@@ -46,31 +50,57 @@ public class SeasonServiceImpl implements SeasonService {
     }
 
     @Override
-    public Season add(SeasonRequest seasonRequest) {
+    public Season add(SeasonRequest seasonRequest) throws CustomException {
+        Optional<Movie> movie = movieRepository.findById(seasonRequest.getMovieId());
+        if (movie.isEmpty()) throw new CustomException("movie không tồn tại!!");
+
+        Set<Day> days = seasonRequest.getDays()
+                .stream()
+                .map(day -> dayRepository.findByDayName(EDayName.valueOf(day)).get())
+                .collect(Collectors.toSet());
+
         Season season = Season.builder()
                 .nickName(seasonRequest.getNickName())
                 .seasonName(seasonRequest.getSeasonName())
                 .description(seasonRequest.getDescription())
                 .avatar(seasonRequest.getAvatar())
                 .status(seasonRequest.getStatus())
-                .seasonType(seasonRequest.getSeasonType())
-                .seasonStatus(seasonRequest.getSeasonStatus())
+                .seasonType(EMovieType.valueOf(seasonRequest.getSeasonType()))
+                .seasonStatus(EMovieStatus.valueOf(seasonRequest.getSeasonStatus()))
                 .release_date(seasonRequest.getRelease_date())
+                .movie(movie.get())
+                .days(days)
                 .build();
         return seasonRepository.save(season);
     }
 
     @Override
-    public Season updateSeason(Long seasonId, Season seasonReq) throws CustomException {
+    public Season updateSeason(Long seasonId, SeasonRequest seasonRequest) throws CustomException {
         Optional<Season> updateSeason = getSeasonById(seasonId);
         if (updateSeason.isEmpty()) throw new CustomException("Phần phim không tồn tại nhaaa!!");
+
         Season season = updateSeason.get();
-        season.setNickName(seasonReq.getNickName());
-        season.setSeasonName(seasonReq.getSeasonName());
-        season.setDescription(seasonReq.getDescription());
-        season.setAvatar(seasonReq.getAvatar());
-        season.setSeasonType(seasonReq.getSeasonType());
-        season.setRelease_date(seasonReq.getRelease_date());
+        if (seasonRequest.getNickName() != null) season.setNickName(seasonRequest.getNickName());
+        if (seasonRequest.getSeasonName() != null) season.setSeasonName(seasonRequest.getSeasonName());
+        if (seasonRequest.getDescription() != null) season.setDescription(seasonRequest.getDescription());
+        if (seasonRequest.getAvatar() != null) season.setAvatar(seasonRequest.getAvatar());
+        if (seasonRequest.getStatus() != null) season.setStatus(seasonRequest.getStatus());
+        if (seasonRequest.getSeasonType() != null)
+            season.setSeasonType(EMovieType.valueOf(seasonRequest.getSeasonType()));
+        if (seasonRequest.getSeasonStatus() != null)
+            season.setSeasonStatus(EMovieStatus.valueOf(seasonRequest.getSeasonStatus()));
+        if (seasonRequest.getRelease_date() != null) season.setRelease_date(seasonRequest.getRelease_date());
+        if (seasonRequest.getMovieId() != null) {
+            Optional<Movie> movie = movieRepository.findById(seasonRequest.getMovieId());
+            if (movie.isPresent()) throw new CustomException("movie không tồn tại!!");
+            season.setMovie(movie.get());
+        }
+        ;
+        if (seasonRequest.getDays() != null) {
+            Set<Day> days = (Set<Day>) seasonRequest.getDays().stream().map(day -> dayRepository.findByDayName(EDayName.valueOf(day)));
+            season.setDays(days);
+        }
+        ;
         return seasonRepository.save(season);
     }
 

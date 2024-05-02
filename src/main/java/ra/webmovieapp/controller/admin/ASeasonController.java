@@ -72,7 +72,7 @@ public class ASeasonController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createMovie(@RequestBody SeasonRequest seasonRequest) {
+    public ResponseEntity<?> createMovie(@RequestBody SeasonRequest seasonRequest) throws CustomException {
         return new ResponseEntity<>(
                 new ResponseWrapper<>(
                         EHttpStatus.SUCCESS,
@@ -86,7 +86,7 @@ public class ASeasonController {
     @PutMapping("/{seasonId}")
     public ResponseEntity<?> updateSeason(
             @PathVariable("seasonId") String updateSeasonId,
-            @RequestBody Season season
+            @RequestBody SeasonRequest seasonRequest
     ) throws CustomException {
         try {
             Long id = Long.parseLong(updateSeasonId);
@@ -95,7 +95,7 @@ public class ASeasonController {
                             EHttpStatus.SUCCESS,
                             HttpStatus.OK.value(),
                             HttpStatus.OK.name(),
-                            seasonService.updateSeason(id, season)
+                            seasonService.updateSeason(id, seasonRequest)
                     ), HttpStatus.OK);
         } catch (NumberFormatException e) {
             throw new CustomException("Sai định dạng ID rồi nhaa!!");
