@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ra.webmovieapp.exception.CustomException;
+import ra.webmovieapp.model.dto.request.DayNameRequest;
 import ra.webmovieapp.model.dto.request.SeasonRequest;
 import ra.webmovieapp.model.dto.wrapper.ResponseWrapper;
 import ra.webmovieapp.model.entity.Movie;
@@ -106,7 +107,47 @@ public class ASeasonController {
     public ResponseEntity<?> hardDeleteMovieById(@PathVariable("seasonId") String SeasonId) throws CustomException {
         try {
             Long id = Long.parseLong(SeasonId);
-            Season season = seasonService.changeStatus (id);
+            Season season = seasonService.changeStatus(id);
+            return new ResponseEntity<>(
+                    new ResponseWrapper<>(
+                            EHttpStatus.SUCCESS,
+                            HttpStatus.OK.value(),
+                            HttpStatus.OK.name(),
+                            season
+                    ), HttpStatus.OK);
+        } catch (NumberFormatException e) {
+            throw new CustomException("Sai định dạng ID rồi nhaa!!");
+        }
+    }
+
+    //  add day to movie
+    @PostMapping("/{seasonId}/day")
+    public ResponseEntity<?> addDayToSeason(
+            @PathVariable("seasonId") String seasonId,
+            @RequestBody DayNameRequest dayName) throws CustomException {
+        try {
+            Long id = Long.parseLong(seasonId);
+            Season season = seasonService.addDayToSeason(id, dayName);
+            return new ResponseEntity<>(
+                    new ResponseWrapper<>(
+                            EHttpStatus.SUCCESS,
+                            HttpStatus.OK.value(),
+                            HttpStatus.OK.name(),
+                            season
+                    ), HttpStatus.CREATED);
+        } catch (NumberFormatException e) {
+            throw new CustomException("Sai định dạng ID rồi nhaa!!");
+        }
+    }
+
+    @DeleteMapping("/{seasonId}/day/{dayId}")
+    public ResponseEntity<?> deleteDayToSeason(
+            @PathVariable("seasonId") String seasonId,
+            @PathVariable("dayId") String dayId) throws CustomException {
+        try {
+            Long deleteSeasonId = Long.parseLong(seasonId);
+            Long deleteDayId = Long.parseLong(dayId);
+            Season season = seasonService.deleteDayToSeason(deleteSeasonId, deleteDayId);
             return new ResponseEntity<>(
                     new ResponseWrapper<>(
                             EHttpStatus.SUCCESS,

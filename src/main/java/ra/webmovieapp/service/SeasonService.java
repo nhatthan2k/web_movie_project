@@ -3,6 +3,7 @@ package ra.webmovieapp.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import ra.webmovieapp.exception.CustomException;
+import ra.webmovieapp.model.dto.request.DayNameRequest;
 import ra.webmovieapp.model.dto.request.SeasonRequest;
 import ra.webmovieapp.model.entity.Movie;
 import ra.webmovieapp.model.entity.Season;
@@ -25,6 +26,9 @@ public interface SeasonService {
 
     Season changeStatus(Long seasonId) throws CustomException;
 
+    Season addDayToSeason(Long seasonId, DayNameRequest dayName) throws CustomException;
+
+    Season deleteDayToSeason(Long seasonId, Long dayId) throws CustomException;
     //  PermitAll
     Page<Season> getAllByStatus(EMovieStatus movieStatus, Pageable pageable);
 

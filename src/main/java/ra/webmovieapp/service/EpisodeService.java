@@ -1,20 +1,20 @@
 package ra.webmovieapp.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import ra.webmovieapp.exception.CustomException;
+import ra.webmovieapp.model.dto.request.EpisodeRequest;
 import ra.webmovieapp.model.entity.Episode;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface EpisodeService {
-    Page<Episode> getAllEpisodeBySeasonId(Pageable pageable, Long seasonId);
+    List<Episode> getAllEpisodeBySeasonId(Long seasonId);
 
     Optional<Episode> getEpisodeById(Long episodeId);
 
-    Episode save(Episode episodeReq) throws CustomException;
+    Episode add(EpisodeRequest episodeRequest) throws CustomException;
 
-    Episode updateEpisode(Long episodeId, Episode episodeReq) throws CustomException;
+    Episode updateEpisode(Long episodeId, EpisodeRequest episodeRequest) throws CustomException;
 
-    void hardDeleteByEpisodeId(Long episodeId) throws CustomException;
+    Episode changeStatus(Long episodeId) throws CustomException;
 }

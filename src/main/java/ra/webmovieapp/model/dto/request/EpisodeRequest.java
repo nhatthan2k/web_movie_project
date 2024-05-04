@@ -12,6 +12,7 @@ public class EpisodeRequest {
     @NotNull(message = "Không được bỏ trống chỗ này nha!!")
     private Long numberEpisode;
     private String source;
+    private Boolean status;
     @NotNull(message = "Không được bỏ trống chỗ này nha!!")
     private Long seasonId;
 }

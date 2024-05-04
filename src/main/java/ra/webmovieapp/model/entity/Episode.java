@@ -15,6 +15,7 @@ import ra.webmovieapp.model.base.BaseModel;
 public class Episode extends BaseModel {
     private Long numberEpisode;
     private String source;
+    private Boolean status;
 
     @ManyToOne
     @JoinColumn(name = "season_id", referencedColumnName = "id")

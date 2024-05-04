@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ra.webmovieapp.exception.CustomException;
+import ra.webmovieapp.model.dto.request.DayNameRequest;
 import ra.webmovieapp.model.dto.request.SeasonRequest;
 import ra.webmovieapp.model.entity.Day;
 import ra.webmovieapp.model.entity.Movie;
@@ -18,6 +19,7 @@ import ra.webmovieapp.repository.MovieRepository;
 import ra.webmovieapp.repository.SeasonRepository;
 import ra.webmovieapp.service.SeasonService;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -113,6 +115,30 @@ public class SeasonServiceImpl implements SeasonService {
         if (season == null) throw new CustomException("Không tìm thấy season");
         season.setStatus ( !season.getStatus () );
         return seasonRepository.save ( season );
+    }
+
+    @Override
+    public Season addDayToSeason(Long seasonId, DayNameRequest dayName) throws CustomException {
+        Season season = seasonRepository.findById ( seasonId ).orElse ( null );
+        if (season == null) throw new CustomException("Không tìm thấy season");
+        Day day = dayRepository.findByDayName(EDayName.valueOf(dayName.getDayName())).orElse(null);
+        if (day == null) throw new CustomException("Không tìm thấy day");
+        Set<Day> newDaySet = season.getDays();
+        newDaySet.add(day);
+        season.setDays(newDaySet);
+        return seasonRepository.save(season);
+    }
+
+    @Override
+    public Season deleteDayToSeason(Long seasonId, Long dayId) throws CustomException {
+        Season season = seasonRepository.findById ( seasonId ).orElse ( null );
+        if (season == null) throw new CustomException("Không tìm thấy season");
+        Day day = dayRepository.findById(dayId).orElse(null);
+        if (day == null) throw new CustomException("Không tìm thấy day");
+        Set<Day> newDaySet = season.getDays();
+        newDaySet.remove(day);
+        season.setDays(newDaySet);
+        return seasonRepository.save(season);
     }
 
     @Override
