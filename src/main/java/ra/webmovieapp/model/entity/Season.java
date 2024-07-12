@@ -28,6 +28,7 @@ public class Season extends BaseModel {
     @Enumerated(EnumType.STRING)
     private EMovieStatus seasonStatus;
     private LocalDate release_date;
+    private boolean isSlider;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

@@ -28,15 +28,15 @@ public class PSeasonController {
 
     @GetMapping("")
     public ResponseEntity<?> getAllSeasonShowing(
-            @RequestParam(defaultValue = "5", name = "limit") int limit,
+            @RequestParam(defaultValue = "20", name = "limit") int limit,
             @RequestParam(defaultValue = "0", name = "page") int page,
-            @RequestParam(defaultValue = "nickName", name = "sort") String sort,
-            @RequestParam(defaultValue = "asc", name = "order") String order
+            @RequestParam(defaultValue = "modifyDate", name = "sort") String sort,
+            @RequestParam(defaultValue = "desc", name = "order") String order
     ) throws CustomException {
         Pageable pageable;
         if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
         else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
-        Page<Season> seasons = seasonService.getAllByStatus(EMovieStatus.SHOWING, pageable);
+        Page<Season> seasons = seasonService.getAllSeason(pageable);
         if (seasons.getContent().isEmpty()) throw new CustomException("Season rỗng nhaaa");
         return new ResponseEntity<>(
                 new ResponseWrapper<>(

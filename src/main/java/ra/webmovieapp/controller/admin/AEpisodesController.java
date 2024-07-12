@@ -26,7 +26,6 @@ public class AEpisodesController {
         try {
             Long id = Long.parseLong(seasonId);
             List<Episode> episodes = episodeService.getAllEpisodeBySeasonId(id);
-            if (episodes.isEmpty()) throw new CustomException("Tập phim rỗng nhaaa");
             return new ResponseEntity<>(
                     new ResponseWrapper<>(
                             EHttpStatus.SUCCESS,
