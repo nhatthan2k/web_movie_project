@@ -28,7 +28,7 @@ public class PSeasonController {
 
     @GetMapping("")
     public ResponseEntity<?> getAllSeasonShowing(
-            @RequestParam(defaultValue = "20", name = "limit") int limit,
+            @RequestParam(defaultValue = "1", name = "limit") int limit,
             @RequestParam(defaultValue = "0", name = "page") int page,
             @RequestParam(defaultValue = "modifyDate", name = "sort") String sort,
             @RequestParam(defaultValue = "desc", name = "order") String order
@@ -43,7 +43,7 @@ public class PSeasonController {
                         EHttpStatus.SUCCESS,
                         HttpStatus.OK.value(),
                         HttpStatus.OK.name(),
-                        seasons.getContent()
+                        seasons
                 ), HttpStatus.OK
         );
     }
@@ -99,7 +99,7 @@ public class PSeasonController {
         }
     }
 
-    @GetMapping("status/{status}")
+    @GetMapping("/status/{status}")
     public ResponseEntity<?> getAllByStatus(
             @PathVariable("status") EMovieStatus status,
             @RequestParam(defaultValue = "5", name = "limit") int limit,
@@ -122,7 +122,7 @@ public class PSeasonController {
         );
     }
 
-    @GetMapping("type/{type}")
+    @GetMapping("/type/{type}")
     public ResponseEntity<?> getAllByType(
             @PathVariable("type") EMovieType type,
             @RequestParam(defaultValue = "5", name = "limit") int limit,
@@ -145,7 +145,7 @@ public class PSeasonController {
         );
     }
 
-    @GetMapping("day/{dayId}")
+    @GetMapping("/day/{dayId}")
     public ResponseEntity<?> getAllByDay(
             @PathVariable("dayId") String dayId,
             @RequestParam(defaultValue = "5", name = "limit") int limit,
@@ -192,7 +192,7 @@ public class PSeasonController {
         }
     }
 
-    @GetMapping("movie/{movieId}")
+    @GetMapping("/movie/{movieId}")
     public ResponseEntity<?> getAllByMovie(@PathVariable("movieId") String movieId) throws CustomException {
         try {
             Long id = Long.parseLong(movieId);
