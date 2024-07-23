@@ -25,6 +25,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static ra.webmovieapp.ultil.GlobalFunction.pathRevert;
+
 @Service
 public class SeasonServiceImpl implements SeasonService {
     @Autowired
@@ -72,6 +74,7 @@ public class SeasonServiceImpl implements SeasonService {
                 .release_date(seasonRequest.getRelease_date())
                 .movie(movie.get())
                 .days(days)
+                .pathSeason(pathRevert(seasonRequest.getSeasonName()))
                 .build();
         return seasonRepository.save(season);
     }
@@ -83,7 +86,10 @@ public class SeasonServiceImpl implements SeasonService {
 
         Season season = updateSeason.get();
         if (seasonRequest.getNickName() != null) season.setNickName(seasonRequest.getNickName());
-        if (seasonRequest.getSeasonName() != null) season.setSeasonName(seasonRequest.getSeasonName());
+        if (seasonRequest.getSeasonName() != null) {
+            season.setSeasonName(seasonRequest.getSeasonName());
+            season.setPathSeason(pathRevert(seasonRequest.getSeasonName()));
+        }
         if (seasonRequest.getDescription() != null) season.setDescription(seasonRequest.getDescription());
         if (seasonRequest.getAvatar() != null) season.setAvatar(seasonRequest.getAvatar());
         if (seasonRequest.getStatus() != null) season.setStatus(seasonRequest.getStatus());

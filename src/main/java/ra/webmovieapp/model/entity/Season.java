@@ -29,6 +29,7 @@ public class Season extends BaseModel {
     private EMovieStatus seasonStatus;
     private LocalDate release_date;
     private boolean isSlider;
+    private String pathSeason;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
