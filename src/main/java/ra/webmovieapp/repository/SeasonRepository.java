@@ -32,4 +32,6 @@ public interface SeasonRepository extends JpaRepository<Season, Long> {
     Page<Season> findAllByDayId(Long dayId, Pageable pageable);
 
     List<Season> findAllByMovie(Movie movie);
+
+    List<Season> findAllByIsSlider(Boolean isSlider);
 }

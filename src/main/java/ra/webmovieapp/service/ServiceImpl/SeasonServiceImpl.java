@@ -180,6 +180,11 @@ public class SeasonServiceImpl implements SeasonService {
     }
 
     @Override
+    public List<Season> getSliderSeason() {
+        return seasonRepository.findAllByIsSlider(true);
+    }
+
+    @Override
     public List<Season> getAllByMovie(Long movieId) throws CustomException {
         Optional<Movie> movie = movieRepository.findById(movieId);
         if (movie.isEmpty()) throw new CustomException("phim không tồn tại");

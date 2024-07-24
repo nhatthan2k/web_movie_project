@@ -42,5 +42,7 @@ public interface SeasonService {
 
     Season getById(Long seasonId);
 
+    List<Season> getSliderSeason();
+
     List<Season> getAllByMovie(Long movieId) throws CustomException;
 }

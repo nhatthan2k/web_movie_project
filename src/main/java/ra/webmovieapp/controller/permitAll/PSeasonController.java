@@ -48,6 +48,19 @@ public class PSeasonController {
         );
     }
 
+    @GetMapping("/slider")
+    public ResponseEntity<?> getSliderSeason() {
+        List<Season> seasons = seasonService.getSliderSeason();
+        return new ResponseEntity<>(
+                new ResponseWrapper<>(
+                        EHttpStatus.SUCCESS,
+                        HttpStatus.OK.value(),
+                        HttpStatus.OK.name(),
+                        seasons
+                ), HttpStatus.OK
+        );
+    }
+
     @GetMapping("/search")
     public ResponseEntity<?> searchSeasonByName(
             @RequestParam(defaultValue = "5", name = "limit") int limit,

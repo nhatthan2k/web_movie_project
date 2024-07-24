@@ -28,7 +28,7 @@ public class Season extends BaseModel {
     @Enumerated(EnumType.STRING)
     private EMovieStatus seasonStatus;
     private LocalDate release_date;
-    private boolean isSlider;
+    private Boolean isSlider;
     private String pathSeason;
 
     @ManyToMany(fetch = FetchType.EAGER)
