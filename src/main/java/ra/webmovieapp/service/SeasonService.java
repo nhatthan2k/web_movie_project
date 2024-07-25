@@ -38,7 +38,7 @@ public interface SeasonService {
 
     Page<Season> getAllByMovieType(EMovieType movieType, Pageable pageable) throws CustomException;
 
-    Page<Season> getAllByDay(Long dayId, Pageable pageable) throws CustomException;
+    List<Season> getAllByDay(String day);
 
     Season getById(Long seasonId);
 

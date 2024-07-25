@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import ra.webmovieapp.model.entity.Day;
 import ra.webmovieapp.model.entity.Movie;
 import ra.webmovieapp.model.entity.Season;
+import ra.webmovieapp.model.enums.EDayName;
 import ra.webmovieapp.model.enums.EMovieStatus;
 import ra.webmovieapp.model.enums.EMovieType;
 
@@ -28,8 +29,8 @@ public interface SeasonRepository extends JpaRepository<Season, Long> {
 
     Page<Season> findAllBySeasonType(EMovieType seasonType, Pageable pageable);
 
-    @Query("select s from Season s join Day d where d.id = :dayId")
-    Page<Season> findAllByDayId(Long dayId, Pageable pageable);
+    @Query("select s from Season s join s.days d where d.dayName = :day")
+    List<Season> findAllByDay(EDayName day);
 
     List<Season> findAllByMovie(Movie movie);
 

@@ -169,9 +169,8 @@ public class SeasonServiceImpl implements SeasonService {
     }
 
     @Override
-    public Page<Season> getAllByDay(Long dayId, Pageable pageable) throws CustomException {
-        if (!dayRepository.existsById(dayId)) throw new CustomException("không tồn tại ngày này");
-        return seasonRepository.findAllByDayId(dayId, pageable);
+    public List<Season> getAllByDay(String day) {
+        return seasonRepository.findAllByDay(EDayName.valueOf(day));
     }
 
     @Override

@@ -28,16 +28,15 @@ public class PSeasonController {
 
     @GetMapping("")
     public ResponseEntity<?> getAllSeasonShowing(
-            @RequestParam(defaultValue = "1", name = "limit") int limit,
+            @RequestParam(defaultValue = "2", name = "limit") int limit,
             @RequestParam(defaultValue = "0", name = "page") int page,
             @RequestParam(defaultValue = "modifyDate", name = "sort") String sort,
             @RequestParam(defaultValue = "desc", name = "order") String order
-    ) throws CustomException {
+    ) {
         Pageable pageable;
         if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
         else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
         Page<Season> seasons = seasonService.getAllSeason(pageable);
-        if (seasons.getContent().isEmpty()) throw new CustomException("Season rỗng nhaaa");
         return new ResponseEntity<>(
                 new ResponseWrapper<>(
                         EHttpStatus.SUCCESS,
@@ -158,32 +157,17 @@ public class PSeasonController {
         );
     }
 
-    @GetMapping("/day/{dayId}")
-    public ResponseEntity<?> getAllByDay(
-            @PathVariable("dayId") String dayId,
-            @RequestParam(defaultValue = "5", name = "limit") int limit,
-            @RequestParam(defaultValue = "0", name = "page") int page,
-            @RequestParam(defaultValue = "nickName", name = "sort") String sort,
-            @RequestParam(defaultValue = "asc", name = "order") String order
-    ) throws CustomException {
-        Pageable pageable;
-        if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
-        else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
-        try {
-            Long id = Long.parseLong(dayId);
-            Page<Season> seasons = seasonService.getAllByDay(id, pageable);
-            if (seasons.getContent().isEmpty()) throw new CustomException("Season rỗng nhaaa");
+    @GetMapping("/day/{day}")
+    public ResponseEntity<?> getAllByDay(@PathVariable("day") String day) {
+            List<Season> seasons = seasonService.getAllByDay(day);
             return new ResponseEntity<>(
                     new ResponseWrapper<>(
                             EHttpStatus.SUCCESS,
                             HttpStatus.OK.value(),
                             HttpStatus.OK.name(),
-                            seasons.getContent()
+                            seasons
                     ), HttpStatus.OK
             );
-        } catch (NumberFormatException e) {
-            throw new CustomException("định dạng sai đường dẫn rồi nha");
-        }
     }
 
     @GetMapping("/{id}")
