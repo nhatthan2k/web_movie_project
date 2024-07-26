@@ -24,8 +24,8 @@ public interface SeasonRepository extends JpaRepository<Season, Long> {
 
     Page<Season> searchBySeasonNameOrNickNameContainingIgnoreCase(String name, String nickName, Pageable pageable);
 
-    @Query("select s from Season s join s.movie m join m.genreDetails g where g.genre.id = :genreId")
-    Page<Season> findAllByGenreId(Long genreId, Pageable pageable);
+    @Query("select s from Season s join s.movie m join m.genreDetails g where g.genre.pathGenre = :genrePath")
+    Page<Season> findAllByGenreId(String genrePath, Pageable pageable);
 
     Page<Season> findAllBySeasonType(EMovieType seasonType, Pageable pageable);
 

@@ -158,9 +158,8 @@ public class SeasonServiceImpl implements SeasonService {
     }
 
     @Override
-    public Page<Season> getAllByGenreId(Long genreId, Pageable pageable) throws CustomException {
-        if (!genreRepository.existsById(genreId)) throw new CustomException("Không tồn tại thể loại này!!");
-        return seasonRepository.findAllByGenreId(genreId, pageable);
+    public Page<Season> getAllByGenrePath(String genrePath, Pageable pageable) throws CustomException {
+        return seasonRepository.findAllByGenreId(genrePath, pageable);
     }
 
     @Override

@@ -18,6 +18,7 @@ public class Genre extends BaseModel {
     private String genreName;
     private String description;
     private Boolean status;
+    private String pathGenre;
 
     @OneToMany(mappedBy = "genre")
     @JsonIgnore

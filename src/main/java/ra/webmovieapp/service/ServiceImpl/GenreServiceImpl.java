@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static ra.webmovieapp.ultil.GlobalFunction.pathRevert;
+
 @Service
 public class GenreServiceImpl implements GenreService {
     @Autowired
@@ -47,6 +49,7 @@ public class GenreServiceImpl implements GenreService {
                 .genreName(genreReq.getGenreName())
                 .description(genreReq.getDescription())
                 .status(genreReq.getStatus())
+                .pathGenre(pathRevert(genreReq.getGenreName()))
                 .build();
         return genreRepository.save(genre);
     }
@@ -59,6 +62,7 @@ public class GenreServiceImpl implements GenreService {
         genre.setGenreName(genreReq.getGenreName());
         genre.setDescription(genreReq.getDescription());
         genre.setStatus(genreReq.getStatus());
+        genre.setPathGenre(pathRevert(genreReq.getGenreName()));
         return genreRepository.save(genre);
     }
 

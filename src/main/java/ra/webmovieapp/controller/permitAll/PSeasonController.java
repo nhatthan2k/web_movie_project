@@ -72,20 +72,19 @@ public class PSeasonController {
         if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
         else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
         Page<Season> seasons = seasonService.searchByNameOrNickName(keyWord, pageable);
-        if (seasons.getContent().isEmpty()) throw new CustomException("Season rỗng nhaaa");
         return new ResponseEntity<>(
                 new ResponseWrapper<>(
                         EHttpStatus.SUCCESS,
                         HttpStatus.OK.value(),
                         HttpStatus.OK.name(),
-                        seasons.getContent()
+                        seasons
                 ), HttpStatus.OK
         );
     }
 
-    @GetMapping("/genre/{genreId}")
+    @GetMapping("/genre/{genrePath}")
     public ResponseEntity<?> getAllSeasonByGenreId(
-            @PathVariable("genreId") String genreId,
+            @PathVariable("genrePath") String genrePath,
             @RequestParam(defaultValue = "5", name = "limit") int limit,
             @RequestParam(defaultValue = "0", name = "page") int page,
             @RequestParam(defaultValue = "nickName", name = "sort") String sort,
@@ -94,21 +93,15 @@ public class PSeasonController {
         Pageable pageable;
         if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
         else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
-        try {
-            Long id = Long.parseLong(genreId);
-            Page<Season> seasons = seasonService.getAllByGenreId(id, pageable);
-            if (seasons.getContent().isEmpty()) throw new CustomException("Season rỗng nhaaa");
-            return new ResponseEntity<>(
-                    new ResponseWrapper<>(
-                            EHttpStatus.SUCCESS,
-                            HttpStatus.OK.value(),
-                            HttpStatus.OK.name(),
-                            seasons.getContent()
-                    ), HttpStatus.OK
-            );
-        } catch (NumberFormatException e) {
-            throw new CustomException("đinh dạng sai rồi nha!!");
-        }
+        Page<Season> seasons = seasonService.getAllByGenrePath(genrePath, pageable);
+        return new ResponseEntity<>(
+                new ResponseWrapper<>(
+                        EHttpStatus.SUCCESS,
+                        HttpStatus.OK.value(),
+                        HttpStatus.OK.name(),
+                        seasons
+                ), HttpStatus.OK
+        );
     }
 
     @GetMapping("/status/{status}")
@@ -118,18 +111,17 @@ public class PSeasonController {
             @RequestParam(defaultValue = "0", name = "page") int page,
             @RequestParam(defaultValue = "nickName", name = "sort") String sort,
             @RequestParam(defaultValue = "asc", name = "order") String order
-    ) throws CustomException {
+    ){
         Pageable pageable;
         if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
         else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
         Page<Season> seasons = seasonService.getAllByStatus(status, pageable);
-        if (seasons.getContent().isEmpty()) throw new CustomException("Season rỗng nhaaa");
         return new ResponseEntity<>(
                 new ResponseWrapper<>(
                         EHttpStatus.SUCCESS,
                         HttpStatus.OK.value(),
                         HttpStatus.OK.name(),
-                        seasons.getContent()
+                        seasons
                 ), HttpStatus.OK
         );
     }
@@ -146,13 +138,12 @@ public class PSeasonController {
         if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
         else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
         Page<Season> seasons = seasonService.getAllByMovieType(type, pageable);
-        if (seasons.getContent().isEmpty()) throw new CustomException("Season rỗng nhaaa");
         return new ResponseEntity<>(
                 new ResponseWrapper<>(
                         EHttpStatus.SUCCESS,
                         HttpStatus.OK.value(),
                         HttpStatus.OK.name(),
-                        seasons.getContent()
+                        seasons
                 ), HttpStatus.OK
         );
     }

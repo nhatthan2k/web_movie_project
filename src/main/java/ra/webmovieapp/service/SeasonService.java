@@ -34,7 +34,7 @@ public interface SeasonService {
 
     Page<Season> searchByNameOrNickName(String keyWord, Pageable pageable);
 
-    Page<Season> getAllByGenreId(Long genreId, Pageable pageable) throws CustomException;
+    Page<Season> getAllByGenrePath(String genrePath, Pageable pageable) throws CustomException;
 
     Page<Season> getAllByMovieType(EMovieType movieType, Pageable pageable) throws CustomException;
 
