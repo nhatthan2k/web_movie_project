@@ -20,7 +20,7 @@ public class PGenreController {
     private GenreService genreService;
 
     @GetMapping
-    public ResponseEntity<?> getGenreOnActive() throws CustomException{
+    public ResponseEntity<?> getGenreOnActive() throws CustomException {
         List<Genre> genres = genreService.getGenresOnActive();
         return new ResponseEntity<>(
                 new ResponseWrapper<>(
@@ -33,7 +33,7 @@ public class PGenreController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> searchGenre(@RequestParam(name = "name") String nameGenre) throws CustomException{
+    public ResponseEntity<?> searchGenre(@RequestParam(name = "name") String nameGenre) throws CustomException {
         List<Genre> genres = genreService.getByNameOrDes(nameGenre, nameGenre);
         return new ResponseEntity<>(
                 new ResponseWrapper<>(

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ra.webmovieapp.exception.CustomException;
+import ra.webmovieapp.model.dto.response.SeasonByDayResponse;
 import ra.webmovieapp.model.dto.wrapper.ResponseWrapper;
 import ra.webmovieapp.model.entity.Season;
 import ra.webmovieapp.model.enums.EHttpStatus;
@@ -17,6 +18,7 @@ import ra.webmovieapp.model.enums.EMovieType;
 import ra.webmovieapp.service.MovieService;
 import ra.webmovieapp.service.SeasonService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -111,7 +113,7 @@ public class PSeasonController {
             @RequestParam(defaultValue = "0", name = "page") int page,
             @RequestParam(defaultValue = "nickName", name = "sort") String sort,
             @RequestParam(defaultValue = "asc", name = "order") String order
-    ){
+    ) {
         Pageable pageable;
         if (order.equals("asc")) pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
         else pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
@@ -150,15 +152,33 @@ public class PSeasonController {
 
     @GetMapping("/day/{day}")
     public ResponseEntity<?> getAllByDay(@PathVariable("day") String day) {
-            List<Season> seasons = seasonService.getAllByDay(day);
-            return new ResponseEntity<>(
-                    new ResponseWrapper<>(
-                            EHttpStatus.SUCCESS,
-                            HttpStatus.OK.value(),
-                            HttpStatus.OK.name(),
-                            seasons
-                    ), HttpStatus.OK
-            );
+        List<Season> seasons = seasonService.getAllByDay(day);
+        return new ResponseEntity<>(
+                new ResponseWrapper<>(
+                        EHttpStatus.SUCCESS,
+                        HttpStatus.OK.value(),
+                        HttpStatus.OK.name(),
+                        seasons
+                ), HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/days")
+    public ResponseEntity<?> getSeasonsByDay() {
+        List<String> dayNames = List.of("MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN");
+        List<SeasonByDayResponse> seasonByDayResponses = new ArrayList<>();
+        dayNames.forEach(dayName -> {
+            List<Season> seasons = seasonService.getAllByDay(dayName);
+            seasonByDayResponses.add(new SeasonByDayResponse(dayName, seasons));
+        });
+        return new ResponseEntity<>(
+                new ResponseWrapper<>(
+                        EHttpStatus.SUCCESS,
+                        HttpStatus.OK.value(),
+                        HttpStatus.OK.name(),
+                        seasonByDayResponses
+                ), HttpStatus.OK
+        );
     }
 
     @GetMapping("/{id}")
